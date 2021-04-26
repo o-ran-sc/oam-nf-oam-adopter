@@ -1,0 +1,53 @@
+---
+project: 'oam_nf_oam_adopter'
+project_creation_date: '2021-04-22'
+project_category: ''
+lifecycle_state: 'Incubation'
+project_lead: &oran_oam_nf_oam_adopter_ptl
+    name: 'Martin Skorupski'
+    email: 'martin.skorupski@highstreet-technologies.com'
+    id: 'demx8as6'
+    company: 'highstreet technologies GmbH'
+    timezone: 'Germany/Berlin'
+primary_contact: *oran_oam_nf_oam_adopter_ptl
+issue_tracking:
+    type: 'jira'
+    url: 'https://jira.o-ran-sc.org/projects/OAM'
+    key: 'OAM'
+mailing_list:
+    type: 'groups.io'
+    url: 'https://lists.o-ran-sc.org/g/main'
+    tag: '[oam]'
+realtime_discussion:
+    type: 'irc'
+    server: 'freenode.net'
+    channel: '#o-ran-sc'
+meetings:
+    - type: 'zoom'
+      agenda: 'https://wiki.o-ran-sc.org/display/OAM/Meeting+notes'
+      url: ''
+      server: 'freenode.net'
+      channel: '#oran'
+      repeats: 'weekly'
+      time: 'Wednesday, 16:00 UTC'
+repositories:
+    - oam/nf-oam-adopter
+committers:
+    - <<: *oran_oam_nf_oam_adopter_ptl
+    - name: Gasparini, Claudio
+      email: claudio.gasparini@intl.att.com
+      company: AT&T Inc
+      id: cdgasparini
+      timezone: US/Eastern
+    - name: Singh, Abhinav
+      email: as0136@att.com
+      company: AT&T Inc
+      id: ASingh
+      timezone: US/Eastern
+tsc:
+    # yamllint disable rule:line-length
+    approval: 'https://wiki.o-ran-sc.org/display/TOC#ORANSCTechnicalOversightCommittee(TOC)-20210421'
+    changes:
+        - type: ''
+          name: ''
+          link: ''
