@@ -1,0 +1,22 @@
+# Maven
+target/
+*.tar.gz
+
+# Eclipse related
+.project
+.classpath
+.settings/
+target-ide/
+release.properties
+
+# Added for Intellij IDEA IDE
+**/.idea/*
+**/*.iml
+
+#Logs
+logs/
+**/*.log
+
+#doc
+/doc/_build
+/doc/pdf
