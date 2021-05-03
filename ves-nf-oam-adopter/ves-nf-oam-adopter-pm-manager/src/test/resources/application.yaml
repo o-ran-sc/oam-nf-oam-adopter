@@ -1,0 +1,4 @@
+pm-rest-manager:
+  synchronization-time-start: "00:05:00"
+  synchronization-time-frequency: 60
+  mapping-config-path: "src/test/resources/pm-ves-message-mapping.yaml"
