@@ -1,0 +1,7 @@
+#########################################
+###          FM Configuration         ###
+#########################################
+snmp-manager:
+  host: "127.0.0.1"
+  port: 10162
+  mapping-config-path: "src/test/resources/fm-ves-message-mapping.yaml"
