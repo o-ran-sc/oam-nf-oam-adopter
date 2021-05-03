@@ -84,7 +84,7 @@ public class PerformanceManagementRestAgentFactory {
         public synchronized void run() {
             final String hostIp = adapter.getHostIpAddress();
             httpClient.readFiles(adapter)
-                    .flatMapSingle(zip -> pmFileMapper.map(zip, hostIp))
+                    .flatMap(zip -> pmFileMapper.map(zip, hostIp))
                     .flatMapCompletable(events -> Observable.fromIterable(events)
                             .concatMapCompletable(pmEventListener::notifyEvents))
                     .doOnSubscribe(result -> LOG.info("PM VES notification forwarding for adapter {} started", hostIp))
