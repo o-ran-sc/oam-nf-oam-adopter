@@ -19,7 +19,6 @@
 
 package org.o.ran.oam.nf.oam.adopter.pm.rest.manager;
 
-import io.reactivex.rxjava3.core.Maybe;
 import io.reactivex.rxjava3.core.Single;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -32,13 +31,13 @@ import org.o.ran.oam.nf.oam.adopter.pm.rest.manager.pojos.Adapter;
 public class HttpRestClientMock implements HttpRestClient {
 
     @Override
-    public Maybe<ZipInputStream> readFiles(@NonNull final Adapter adapter) {
+    public Single<ZipInputStream> readFiles(@NonNull final Adapter adapter) {
         final InputStream file = HttpRestClientMock.class.getResourceAsStream("/zip/nfOamAdapter1.zip");
         if (file == null) {
-            return Maybe.error(new Exception("Failed to read test file"));
+            return Single.error(new Exception("Failed to read test file"));
         }
         final BufferedInputStream bis = new BufferedInputStream(file);
-        return Maybe.just(new ZipInputStream(bis));
+        return Single.just(new ZipInputStream(bis));
     }
 
     @Override
