@@ -17,30 +17,24 @@
  *  ============LICENSE_END=========================================================
  */
 
-package org.o.ran.oam.nf.oam.adopter.pm.rest.manager;
+package org.o.ran.oam.nf.oam.pm.sb.rest.client.http;
 
-import com.google.gson.Gson;
-import io.reactivex.rxjava3.core.Completable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.o.ran.oam.nf.oam.adopter.api.CommonEventFormat302ONAP;
-import org.o.ran.oam.nf.oam.adopter.api.VesEventNotifier;
-import org.springframework.stereotype.Service;
+public enum Urls {
+    TOKEN_URL("/isco/api/auth/token"),
+    LIST_PIM_CANCELER_FILES_URL("/isco/api/system/files/list/pimcanceler"),
+    DOWNLOAD_PIM_CANCELER_FILES_URL("/isco/api/system/files/download/pimcanceler"),
+    OFFSET_URL("/isco/api/network/config"),
+    HTTPS("https://"),
+    BEARER("Bearer "),
+    APPLICATION_JSON("application/json");
 
-@Service("test")
-final class VesEventNotifierMock implements VesEventNotifier {
+    private final String url;
 
-    private static final Gson GSON = new Gson();
-    private final List<CommonEventFormat302ONAP> event = new ArrayList<>();
-
-    @Override
-    public synchronized Completable notifyEvents(final CommonEventFormat302ONAP event) {
-        this.event.add(event);
-        return Completable.complete();
+    Urls(final String url) {
+        this.url = url;
     }
 
-    protected synchronized List<String> getEvents() {
-        return event.stream().map(e -> GSON.toJson(e, CommonEventFormat302ONAP.class)).collect(Collectors.toList());
+    public String get() {
+        return url;
     }
 }

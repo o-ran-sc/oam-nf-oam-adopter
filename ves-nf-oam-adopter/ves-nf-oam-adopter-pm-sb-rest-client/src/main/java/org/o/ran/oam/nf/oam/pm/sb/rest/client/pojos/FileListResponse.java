@@ -17,30 +17,14 @@
  *  ============LICENSE_END=========================================================
  */
 
-package org.o.ran.oam.nf.oam.adopter.pm.rest.manager;
+package org.o.ran.oam.nf.oam.pm.sb.rest.client.pojos;
 
-import com.google.gson.Gson;
-import io.reactivex.rxjava3.core.Completable;
-import java.util.ArrayList;
+import com.google.gson.annotations.SerializedName;
 import java.util.List;
-import java.util.stream.Collectors;
-import org.o.ran.oam.nf.oam.adopter.api.CommonEventFormat302ONAP;
-import org.o.ran.oam.nf.oam.adopter.api.VesEventNotifier;
-import org.springframework.stereotype.Service;
+import lombok.Getter;
 
-@Service("test")
-final class VesEventNotifierMock implements VesEventNotifier {
-
-    private static final Gson GSON = new Gson();
-    private final List<CommonEventFormat302ONAP> event = new ArrayList<>();
-
-    @Override
-    public synchronized Completable notifyEvents(final CommonEventFormat302ONAP event) {
-        this.event.add(event);
-        return Completable.complete();
-    }
-
-    protected synchronized List<String> getEvents() {
-        return event.stream().map(e -> GSON.toJson(e, CommonEventFormat302ONAP.class)).collect(Collectors.toList());
-    }
+@Getter
+public class FileListResponse {
+    @SerializedName("file_list")
+    private List<File> fileList;
 }

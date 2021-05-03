@@ -46,7 +46,9 @@
             ../ves-nf-oam-adopter-snmp-manager/target/site/jacoco-ut/jacoco.xml,
             ../ves-nf-oam-adopter-snmp-manager/target/site/jacoco-aggregate/jacoco.xml,
             ../ves-nf-oam-adopter-pm-manager/target/site/jacoco-ut/jacoco.xml,
-            ../ves-nf-oam-adopter-pm-manager/target/site/jacoco-aggregate/jacoco.xml
+            ../ves-nf-oam-adopter-pm-manager/target/site/jacoco-aggregate/jacoco.xml,
+            ../ves-nf-oam-adopter-pm-sb-rest-client/target/site/jacoco-ut/jacoco.xml,
+            ../ves-nf-oam-adopter-pm-sb-rest-client/target/site/jacoco-aggregate/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
         <!--Dependency Versions-->
         <commons-configuration2.version>2.7</commons-configuration2.version>

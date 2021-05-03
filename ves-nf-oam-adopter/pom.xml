@@ -50,5 +50,6 @@
         <module>ves-nf-oam-adopter-event-notifier</module>
         <module>ves-nf-oam-adopter-snmp-manager</module>
         <module>ves-nf-oam-adopter-pm-manager</module>
+        <module>ves-nf-oam-adopter-pm-sb-rest-client</module>
     </modules>
 </project>
