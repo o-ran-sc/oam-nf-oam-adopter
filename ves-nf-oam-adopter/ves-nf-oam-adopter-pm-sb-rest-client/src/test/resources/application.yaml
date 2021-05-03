@@ -1,0 +1,4 @@
+pm-rest-manager:
+  ran-token-endpoint: /auth/token
+  ran-pm-endpoint: /pm/files
+  ran-time-zone-offset-endpoint: /system/timeZone
