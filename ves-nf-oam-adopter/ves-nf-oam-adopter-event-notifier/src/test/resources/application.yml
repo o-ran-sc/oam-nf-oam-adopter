@@ -1,0 +1,3 @@
+ves-collector:
+  url: http://vescollector:8080/eventListener/v7
+  vesEncodedAuth: YWRtaW46YWRtaW4=
