@@ -1,0 +1,26 @@
+reporting-entity-name: "NF-OAM-ADOPTER"
+reporting-entity-id: "ONAP-NF-OAM-SOME-VENDOR-ADAPTER"
+nf-vendor-name: "SOME-VENDOR"
+event-source-type: "SNMP Agent"
+event-name: "PM_Notification"
+measurement-interval: 40
+priority: "High"
+batch-size: 5
+csv:
+  source-name: Name
+  event-id:
+    - PortId
+    - Date
+    - Time
+  additional-fields:
+    - PortId
+    - Name
+    - Date
+    - Time
+  additional-measurements-name: "Port measurements"
+  additional-measurements:
+    - A_Parameter
+    - B_Parameter
+    - C_Parameter
+    - D_Parameter
+    - E_Parameter
