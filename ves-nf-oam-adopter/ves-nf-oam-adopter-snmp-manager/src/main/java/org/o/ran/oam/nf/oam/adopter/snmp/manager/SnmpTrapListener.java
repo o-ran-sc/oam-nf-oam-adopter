@@ -103,13 +103,13 @@ final class SnmpTrapListener implements CommandResponder, Runnable {
         final UdpAddress address = (UdpAddress) cmdRespEvent.getPeerAddress();
         final ZoneId optZoneId = timeZoneOffsetService.getTimeZone(address.getInetAddress().getHostAddress());
         final String timeZone = Optional.ofNullable(optZoneId)
-                                        .map(zoneId -> "UTC" + LocalDateTime.now().atZone(zoneId).getOffset()
-                                                                       .toString()).orElse(null);
+            .map(zoneId -> "UTC" + LocalDateTime.now().atZone(zoneId).getOffset().toString()).orElse(null);
 
         mapper.toEvent(address, timeZone, pdu)
                 .flatMapCompletable(vesEventNotifier::notifyEvents)
                 .doOnSubscribe(result -> LOG.debug("SNMP Trap processing started"))
                 .doOnComplete(() -> LOG.debug("SNMP Trap processed successfully"))
-                .doOnError(error -> LOG.error("Failed to process SNMP Trap", error)).subscribe();
+                .doOnError(error -> LOG.error("Failed to process SNMP Trap", error))
+                .subscribe();
     }
 }
