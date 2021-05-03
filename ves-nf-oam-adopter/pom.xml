@@ -49,5 +49,6 @@
         <module>ves-nf-oam-adopter-api</module>
         <module>ves-nf-oam-adopter-event-notifier</module>
         <module>ves-nf-oam-adopter-snmp-manager</module>
+        <module>ves-nf-oam-adopter-pm-manager</module>
     </modules>
 </project>
