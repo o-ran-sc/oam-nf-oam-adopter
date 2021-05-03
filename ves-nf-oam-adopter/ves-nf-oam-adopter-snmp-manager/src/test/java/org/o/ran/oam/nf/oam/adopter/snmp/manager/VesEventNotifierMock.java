@@ -17,22 +17,34 @@
  *  ============LICENSE_END=========================================================
  */
 
-package org.o.ran.oam.nf.oam.adopter.snmp.manager.properties;
+package org.o.ran.oam.nf.oam.adopter.snmp.manager;
 
-import javax.validation.constraints.NotEmpty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
+import com.google.gson.Gson;
+import io.reactivex.rxjava3.core.Completable;
+import org.o.ran.oam.nf.oam.adopter.api.CommonEventFormat302ONAP;
+import org.o.ran.oam.nf.oam.adopter.api.VesEventNotifier;
+import org.springframework.stereotype.Service;
 
-@Component
-@ConfigurationProperties(prefix = "snmp-manager")
-@Data
-@NoArgsConstructor
-@Validated
-public class SnmpManagerProperties {
-    @NotEmpty
-    private String host;
-    private int port;
+@Service("test")
+class VesEventNotifierMock implements VesEventNotifier {
+
+    private static final Gson GSON = new Gson();
+    private CommonEventFormat302ONAP event;
+
+    @Override
+    public synchronized Completable notifyEvents(final CommonEventFormat302ONAP event) {
+        this.event = event;
+        return Completable.complete();
+    }
+
+    protected String getEvent() {
+        if (event == null) {
+            return null;
+        }
+        return GSON.toJson(event, CommonEventFormat302ONAP.class);
+    }
+
+    protected void clear() {
+        event = null;
+    }
 }
