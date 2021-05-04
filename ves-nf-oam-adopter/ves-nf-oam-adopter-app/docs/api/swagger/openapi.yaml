@@ -16,8 +16,8 @@
 #  ============LICENSE_END=========================================================
 openapi: 3.0.3
 info:
-  title: O-RAN OAM Adopter RAN Mock
-  description: API for O-RAN OAM Adopter RAN Mock service.
+  title: O-RAN OAM Adopter PM Manager
+  description: API for O-RAN OAM Adopter PM Manager service.
   version: "1.0.0"
   license:
     name: "Apache 2.0"
@@ -26,78 +26,95 @@ info:
 servers:
   - url: https://example.io/v1
 
+security:
+  - BasicAuth: []
+
 paths:
-  /auth/token:
-    post:
-      security:
-        - BasicAuth: [ ]
+  /:
+    get:
       tags:
         - controller
-      summary: Generate token
-      description: Generate token
-      operationId: authenticateAndGenerateToken
+      summary: Read all adapters host address
+      description: Returns a list of adapters host address
+      operationId: getAllAdapters
       responses:
         '200':
           description: Successfully returned a list of adapters host address
           content:
             application/json:
               schema:
-                type: string
+                type: array
+                items:
+                  type: string
         '400':
           $ref: '#/components/responses/400Error'
-        '401':
-          $ref: '#/components/responses/401Error'
-  /pm/files:
-    get:
+
+
+  /adapter/{host}:
+    delete:
       tags:
         - controller
-      summary: Read Performance Management Files
-      description: Read Performance Management Files
-      operationId: getPerformanceManagementFiles
+      description: Delete an adapter by host address
+      operationId: removeAdapter
+      parameters:
+        - name: host
+          in: path
+          required: true
+          schema:
+            type: string
+
       responses:
         '200':
-          description: Successfully returned ZIP with CSV pm files
-          content:
-            application/zip:
-              schema:
-                type: string
-                format: binary
+          description: Successfully deleted an adapter
         '400':
-          $ref: '#/components/responses/400Error'
+          description: Invalid request
         '401':
-          $ref: '#/components/responses/401Error'
-  /system/timeZone:
-    get:
+          description: Unauthorized
+        '404':
+          description: adapter not found
+
+  /adapter:
+    post:
       tags:
         - controller
-      summary: Read time zone
-      description: Read time zone
-      operationId: getTimeZone
+      description: create an adapter instance
+      operationId: addAdapter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adapter'
       responses:
         '200':
-          description: Successfully returned time zone of the RAN
-          content:
-            application/json:
-              schema:
-                type: string
+          description: Successfully returned a list of adapters
         '400':
           $ref: '#/components/responses/400Error'
-        '401':
-          $ref: '#/components/responses/401Error'
 
 components:
+  schemas:
+    Adapter:
+      type: object
+      properties:
+        host:
+          type: string
+        mechId:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+          required:
+            - username
+            - password
+      required:
+        - host
+        - mechId
+
   responses:
     400Error:
       description: Invalid request
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-    401Error:
-      description: Unauthorized
       content:
         application/json:
           schema:
