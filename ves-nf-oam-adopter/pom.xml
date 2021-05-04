@@ -52,5 +52,6 @@
         <module>ves-nf-oam-adopter-snmp-manager</module>
         <module>ves-nf-oam-adopter-pm-manager</module>
         <module>ves-nf-oam-adopter-pm-sb-rest-client</module>
+        <module>ves-nf-oam-adopter-app</module>
     </modules>
 </project>

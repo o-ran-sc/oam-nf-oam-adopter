@@ -1,0 +1,124 @@
+#  ============LICENSE_START=======================================================
+#  Copyright © 2021 AT&T Intellectual Property. All rights reserved.
+#  ================================================================================
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#        http://www.apache.org/licenses/LICENSE-2.0
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+#
+#  SPDX-License-Identifier: Apache-2.0
+#  ============LICENSE_END=========================================================
+openapi: 3.0.3
+info:
+  title: O-RAN OAM Adopter PM Manager
+  description: API for O-RAN OAM Adopter PM Manager service.
+  version: "1.0.0"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0"
+
+servers:
+  - url: https://example.io/v1
+
+security:
+  - BasicAuth: []
+
+paths:
+  /:
+    get:
+      tags:
+        - controller
+      summary: Read all adapters host address
+      description: Returns a list of adapters host address
+      operationId: getAllAdapters
+      responses:
+        '200':
+          description: Successfully returned a list of adapters host address
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          $ref: '#/components/responses/400Error'
+
+
+  /adapter/{host}:
+    delete:
+      tags:
+        - controller
+      description: Delete an adapter by host address
+      operationId: removeAdapter
+      parameters:
+        - name: host
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Successfully deleted an adapter
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: adapter not found
+
+  /adapter:
+    post:
+      tags:
+        - controller
+      description: create an adapter instance
+      operationId: addAdapter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adapter'
+      responses:
+        '200':
+          description: Successfully returned a list of adapters
+        '400':
+          $ref: '#/components/responses/400Error'
+
+components:
+  schemas:
+    Adapter:
+      type: object
+      properties:
+        host:
+          type: string
+        mechId:
+          type: object
+          properties:
+            username:
+              type: string
+            password:
+              type: string
+          required:
+            - username
+            - password
+      required:
+        - host
+        - mechId
+
+  responses:
+    400Error:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
