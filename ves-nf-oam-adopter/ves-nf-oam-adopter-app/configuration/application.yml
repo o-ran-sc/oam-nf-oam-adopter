@@ -1,0 +1,34 @@
+spring.devtools.restart.log-condition-evaluation-delta: false
+logging.config: log4j2.yml
+server:
+  port : ${SERVER_PORT:443}
+  username: ${USERNAME:admin}
+  password: ${PASSWORD:admin}
+  ssl:
+    enabled: true
+    key-store-type: JKS
+    key-alias: nf-oam-adopter
+    key-store: ${KEYSTORE_PATH:ssl/nf-oam-adopter-keystore.jks}
+    key-store-password: ${KEY_STORE_PASSWORD:nf-oam-adopter}
+    key-password: ${KEY_PASSWORD:nf-oam-adopter}
+    trust-store: ${TRUST_STORE_PATH:ssl/nf-oam-adopter-truststore.jks}
+    trust-store-password: ${TRUST_STORE_PASSWORD:nf-oam-adopter}
+    enabled-protocols: TLSv1.3
+    ciphers: TLS_AES_128_GCM_SHA256,TLS_AES_256_GCM_SHA384,TLS_CHACHA20_POLY1305_SHA256, TLS_AES_128_CCM_8_SHA256, TLS_AES_128_CCM_SHA256
+ves-collector:
+  url: ${VES_COLLECTOR}
+  vesEncodedAuth: ${VES_ENCODED_AUTH}
+http-client:
+  conection-timeout: ${CONNECTION_TIMEOUT:600}
+  response-timeout: ${RESPONSE_TIMEOUT:600}
+pm-rest-manager:
+  synchronization-time-start: ${PM_SYNC_TIME_START}
+  synchronization-time-frequency: ${PM_SYNC_TIME_FREQ}
+  mapping-config-path: ${PM_MAPPING_FILE_PATH:mapping-configuration/pm-ves-message-mapping.yaml}
+  ran-token-endpoint: /auth/token
+  ran-pm-endpoint: /pm/files
+  ran-time-zone-offset-endpoint: /system/timeZone
+snmp-manager:
+  host: "0.0.0.0"
+  port: ${SNMP_PORT:162}
+  mapping-config-path: ${FM_MAPPING_FILE_PATH:mapping-configuration/fm-ves-message-mapping.yaml}
