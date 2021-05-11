@@ -48,6 +48,11 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <artifactId>ves-nf-oam-adopter-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>ves-nf-oam-adopter-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
