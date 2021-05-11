@@ -1,1 +1,3 @@
-Folder for docker solution
+Local deploy example
+
+docker-compose up
