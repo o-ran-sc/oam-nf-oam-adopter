@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+* ============LICENSE_START=======================================================
+* O-RAN-SC
+* ================================================================================
+* Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
+* ================================================================================
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+* ============LICENSE_END============================================
+*
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.o-ran-sc.oam</groupId>
+        <artifactId>ves-nf-oam-adopter-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../ves-nf-oam-adopter-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ves-nf-oam-adopter-mock</artifactId>
+
+    <properties>
+        <!--Image properties-->
+        <image.name>ves-nf-oam-adopter-ran-mock</image.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.snmp4j</groupId>
+            <artifactId>snmp4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-annotations</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- Swagger code generation. -->
+            <plugin>
+                <groupId>io.swagger.codegen.v3</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>${swagger-codegen-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/docs/api/swagger/openapi.yaml</inputSpec>
+                            <invokerPackage>org.o.ran.oam.nf.oam.adopter.mock.app.controller</invokerPackage>
+                            <modelPackage>org.o.ran.oam.nf.oam.adopter.mock.model</modelPackage>
+                            <apiPackage>org.o.ran.oam.nf.oam.adopter.mock.api</apiPackage>
+                            <language>spring</language>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <configOptions>
+                                <sourceFolder>src/gen/java</sourceFolder>
+                                <dateLibrary>java11</dateLibrary>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useTags>true</useTags>
+                                <serializableModel>true</serializableModel>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>docker</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <images>
+                                <image>
+                                    <name>${nexus.repository}${image.name}</name>
+                                    <build>
+                                        <from>${base.image}</from>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                        </tags>
+                                        <workdir>${image.workdir}</workdir>
+                                        <entryPoint>
+                                            <exec>
+                                                <args>java</args>
+                                                <args>-jar</args>
+                                                <args>${project.artifactId}-${project.version}.jar</args>
+                                            </exec>
+                                        </entryPoint>
+                                        <assembly>
+                                            <basedir>${image.workdir}</basedir>
+                                            <inline>
+                                                <dependencySets>
+                                                    <dependencySet>
+                                                        <useProjectArtifact>true</useProjectArtifact>
+                                                        <includes>
+                                                            <include>${project.groupId}:${project.artifactId}</include>
+                                                        </includes>
+                                                        <outputFileNameMapping>${project.build.finalName}.jar</outputFileNameMapping>
+                                                    </dependencySet>
+                                                </dependencySets>
+                                                <files>
+                                                    <file>
+                                                        <source>${base.config}application.yml</source>
+                                                    </file>
+                                                    <file>
+                                                        <source>${base.config}/zip/pmFiles.zip</source>
+                                                        <outputDirectory>.</outputDirectory>
+                                                        <destName>./pmFiles.zip</destName>
+                                                    </file>
+                                                    <file>
+                                                        <source>${base.config}log4j2.yml</source>
+                                                    </file>
+                                                    <file>
+                                                        <source>${base.config}/ssl/nf-oam-adopter-keystore.jks</source>
+                                                        <outputDirectory>./ssl</outputDirectory>
+                                                        <destName>nf-oam-adopter-keystore.jks</destName>
+                                                    </file>
+                                                </files>
+                                            </inline>
+                                        </assembly>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-docker-image</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>push-image</id>
+                                <phase>deploy</phase>
+                                <goals>
+                                    <goal>push</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
