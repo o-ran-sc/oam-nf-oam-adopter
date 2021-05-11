@@ -1,0 +1,12 @@
+version: "3.5"
+
+services:
+  ves-nf-oam-adopter-ran-mock:
+    ports:
+      - "444:443/tcp"
+    restart: unless-stopped
+    image: nexus3.o-ran-sc.org:10003/o-ran-sc/ves-nf-oam-adopter-ran-mock:latest
+    container_name: ves-nf-oam-adopter-ran-mock
+    environment:
+      KEY_PASSWORD: nf-oam-adopter
+      KEY_STORE_PASSWORD: nf-oam-adopter

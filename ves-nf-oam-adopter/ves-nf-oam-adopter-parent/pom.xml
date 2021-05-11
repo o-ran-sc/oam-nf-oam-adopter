@@ -48,16 +48,25 @@
         <lombok.version>1.18.20</lombok.version>
         <jdt.annotation.version>2.2.600</jdt.annotation.version>
         <rxjava.version>3.0.12</rxjava.version>
-        <spotbugs-maven-plugin.version>4.2.3</spotbugs-maven-plugin.version>
+        <snmp4j.version>3.4.4</snmp4j.version>
+        <spotbugs.version>4.2.3</spotbugs.version>
         <spring.boot.version>2.4.5</spring.boot.version>
+        <swagger-annotations.version>2.1.9</swagger-annotations.version>
         <!--Plugins Versions-->
-        <sonar.scanner.version>3.8.0.2131</sonar.scanner.version>
         <com.puppycrawl.tools.version>8.41</com.puppycrawl.tools.version>
         <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
+        <sonar.scanner.version>3.8.0.2131</sonar.scanner.version>
         <spotbugs-maven-plugin.version>4.2.3</spotbugs-maven-plugin.version>
+        <spring.boot.version>2.4.5</spring.boot.version>
+        <swagger-codegen-maven-plugin.version>3.0.25</swagger-codegen-maven-plugin.version>
+        <!--Image properties-->
+        <base.image>openjdk:11-jre-slim</base.image>
+        <base.config>${project.basedir}/configuration/</base.config>
+        <image.workdir>/o-ran-ves-adapter/</image.workdir>
+        <nexus.repository>nexus3.o-ran-sc.org:10003/o-ran-sc/</nexus.repository>
     </properties>
 
     <dependencyManagement>
@@ -68,6 +77,21 @@
                 <version>${project.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.snmp4j</groupId>
+                <artifactId>snmp4j</artifactId>
+                <version>${snmp4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-annotations</artifactId>
+                <version>${spotbugs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -373,6 +397,18 @@
                             <id>attach-javadocs</id>
                             <goals>
                                 <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring.boot.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
                             </goals>
                         </execution>
                     </executions>
