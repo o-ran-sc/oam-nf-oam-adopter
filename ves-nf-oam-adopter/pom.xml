@@ -46,5 +46,6 @@
         <module>ves-nf-oam-adopter-artifacts</module>
         <module>ves-nf-oam-adopter-checkstyle</module>
         <module>ves-nf-oam-adopter-spotbugs</module>
+        <module>ves-nf-oam-adopter-mock</module>
     </modules>
 </project>
