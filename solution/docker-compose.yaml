@@ -1,0 +1,42 @@
+version: "3.5"
+
+services:
+#  ves-collector:
+#    restart: unless-stopped
+#    ports:
+#      - "8080:8080/udp"
+#    image: nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.ves.vescollector:latest
+#    container_name: vescollector
+#    environment:
+#      DMAAPHOST: 50.50.50.50
+
+  ves-nf-oam-adopter-ran-mock:
+    ports:
+      - "444:443/tcp"
+    network_mode: host
+    restart: unless-stopped
+    image: nexus3.o-ran-sc.org:10003/o-ran-sc/ves-nf-oam-adopter-ran-mock:latest
+    container_name: ves-nf-oam-adopter-ran-mock
+    environment:
+      KEY_PASSWORD: nf-oam-adopter
+      KEY_STORE_PASSWORD: nf-oam-adopter
+      SNMP-DESTINY: 0.0.0.0/162
+
+  ves-nf-oam-adopter:
+    ports:
+      - "162:162/udp"
+      - "443:443/tcp"
+    network_mode: host
+    restart: unless-stopped
+    image: nexus3.o-ran-sc.org:10003/o-ran-sc/ves-nf-oam-adopter:latest
+    container_name: ves-nf-oam-adopter
+    environment:
+      USERNAME: admin
+      PASSWORD: admin
+      KEY_PASSWORD: nf-oam-adopter
+      KEY_STORE_PASSWORD: nf-oam-adopter
+      TRUST_STORE_PASSWORD: nf-oam-adopter
+      VES_COLLECTOR: http://vescollector:8080/eventListener/v7
+      VES_ENCODED_AUTH: YWRtaW46YWRtaW4=
+      PM_SYNC_TIME_START: "06:05:00"
+      PM_SYNC_TIME_FREQ: "24:00:00"
