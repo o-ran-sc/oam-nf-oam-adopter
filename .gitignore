@@ -18,5 +18,6 @@ logs/
 **/*.log
 
 #doc
-/doc/_build
+.tox
+docs/_build/
 /doc/pdf
