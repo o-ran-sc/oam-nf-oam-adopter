@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f285d3d8_9dbbd4e3",
+        "filename": "docs/conf.yaml",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000436
+      },
+      "writtenOn": "2021-05-17T12:05:18Z",
+      "side": 1,
+      "message": "here I have doubts about the correct name to use.\noam -\u003e root project\nnf-oam-adopter -\u003e name of this sub project corresponding with repo as well\noam-nf-oam-adopter -\u003e project name present under ci-management\n\ndocumentation says\n\n\"Create file docs/conf.yaml with the following content, but be sure to use your project name, not \"your-repo\":\"\n\n@Weichen could you clarify which one is the correct one to be used?\n\n\nIn addition step 4, says\n\nDOC team will do the Step 4 in DOC repo! If you are not from OSC DOC project, please do not do this step.  \nStep 4: Add a link to your-repo documentation \n\nWill you be the correct person to take over step 4? Or is there some e-mail or other way that step 4 needs to be triggered.\n\nThanks",
+      "range": {
+        "startLine": 3,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 12
+      },
+      "revId": "621c521a4007ca9bd68ccfc7397e53bd534d04a5",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
