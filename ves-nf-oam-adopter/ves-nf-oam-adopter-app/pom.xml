@@ -34,9 +34,6 @@
     <artifactId>ves-nf-oam-adopter-app</artifactId>
 
     <properties>
-        <minimum.coverage>0.18</minimum.coverage>
-        <!--Plugins properties-->
-        <swagger-codegen-maven-plugin.version>3.0.25</swagger-codegen-maven-plugin.version>
         <!--Image properties-->
         <image.name>ves-nf-oam-adopter</image.name>
     </properties>
@@ -90,6 +87,16 @@
             <groupId>io.swagger.core.v3</groupId>
             <artifactId>swagger-annotations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -102,7 +109,6 @@
             <plugin>
                 <groupId>io.swagger.codegen.v3</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>${swagger-codegen-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
