@@ -148,7 +148,7 @@
                                 <image>
                                     <name>${nexus.repository}${image.name}</name>
                                     <build>
-                                        <from>${base.image}</from>
+                                        <from>${nexus.repository.mirror}${base.image}</from>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>
