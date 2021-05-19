@@ -16,7 +16,7 @@ services:
       - "443:443/tcp"
     network_mode: host
     restart: unless-stopped
-    image: nexus3.o-ran-sc.org:10003/o-ran-sc/ves-nf-oam-adopter-ran-mock:latest
+    image: nexus3.o-ran-sc.org:10004/o-ran-sc/ves-nf-oam-adopter-ran-mock:latest
     container_name: ves-nf-oam-adopter-ran-mock
     environment:
       KEY_PASSWORD: nf-oam-adopter
@@ -29,7 +29,7 @@ services:
       - "443:444/tcp"
     network_mode: host
     restart: unless-stopped
-    image: nexus3.o-ran-sc.org:10003/o-ran-sc/ves-nf-oam-adopter:latest
+    image: nexus3.o-ran-sc.org:10004/o-ran-sc/ves-nf-oam-adopter:latest
     container_name: ves-nf-oam-adopter
     environment:
       SERVER_PORT: 444

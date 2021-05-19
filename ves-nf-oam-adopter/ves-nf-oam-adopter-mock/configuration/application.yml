@@ -1,7 +1,7 @@
 spring.devtools.restart.log-condition-evaluation-delta: false
 scheduler:
-  fixedDelay: 8000
-  initialDelay: 4000
+  fixedDelay: 16000
+  initialDelay: 8000
 security:
   auth:
     username: admin

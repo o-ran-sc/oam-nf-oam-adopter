@@ -40,6 +40,10 @@ public class LoginAttemptsLogger {
     public void auditEventHappened(final AuditApplicationEvent auditApplicationEvent) {
         final AuditEvent auditEvent = auditApplicationEvent.getAuditEvent();
         final WebAuthenticationDetails details = (WebAuthenticationDetails) auditEvent.getData().get("details");
+        if (details == null) {
+            LOG.info("AUDIT: User: {} Event Type: {}", auditEvent.getPrincipal(), auditEvent.getType());
+            return;
+        }
         LOG.info("AUDIT: User: {} Event Type: {} Remote IP address: {}",
                 auditEvent.getPrincipal(), auditEvent.getType(), details.getRemoteAddress());
     }

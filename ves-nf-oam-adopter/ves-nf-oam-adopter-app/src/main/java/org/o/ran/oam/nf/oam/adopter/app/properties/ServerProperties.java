@@ -17,7 +17,7 @@
  *  ============LICENSE_END=========================================================
  */
 
-package org.o.ran.oam.nf.oam.adopter.app;
+package org.o.ran.oam.nf.oam.adopter.app.properties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

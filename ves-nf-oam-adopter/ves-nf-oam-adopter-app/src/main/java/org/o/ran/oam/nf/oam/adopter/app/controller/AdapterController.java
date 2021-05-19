@@ -57,7 +57,6 @@ public class AdapterController implements ControllerApi {
     }
 
     @Override
-    @SneakyThrows
     public ResponseEntity<List<String>> getAllAdapters() {
         LOG.info("Request triggered: getAllAdapters");
         return ResponseEntity.ok(deployer.getAll());

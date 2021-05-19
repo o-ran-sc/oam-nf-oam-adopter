@@ -19,7 +19,6 @@
 
 package org.o.ran.oam.nf.oam.adopter.app.http;
 
-import com.google.common.base.Strings;
 import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
@@ -37,10 +36,8 @@ import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManager;
 import org.apache.hc.client5.http.impl.nio.PoolingAsyncClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.ssl.ClientTlsStrategyBuilder;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
-import org.apache.hc.client5.http.ssl.TrustAllStrategy;
 import org.apache.hc.core5.http2.HttpVersionPolicy;
 import org.apache.hc.core5.ssl.SSLContextBuilder;
-import org.apache.hc.core5.ssl.SSLContexts;
 import org.apache.hc.core5.util.Timeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,15 +53,7 @@ public final class HttpCientFactory {
             final String trustStorePassword, final Long conectionTimeout, final Long responseTimeout)
             throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException,
             CertificateException {
-        if (Strings.isNullOrEmpty(trustStore) || Strings.isNullOrEmpty(trustStorePassword)) {
-            return trustAllCertificate(conectionTimeout, responseTimeout);
-        }
-        final File trustStoreFilePath = new File(trustStore);
-        if (!trustStoreFilePath.exists() || trustStoreFilePath.isDirectory()) {
-            return trustAllCertificate(conectionTimeout, responseTimeout);
-        }
-
-        final SSLContext sslContext = getSslContext(trustStoreFilePath, trustStorePassword);
+        final SSLContext sslContext = getSslContext(new File(trustStore), trustStorePassword);
         return trustTrustStore(sslContext, conectionTimeout, responseTimeout);
     }
 
@@ -99,25 +88,6 @@ public final class HttpCientFactory {
                 .setConnectTimeout(Timeout.ofSeconds(conectionTimeout))
                 .setResponseTimeout(Timeout.ofSeconds(responseTimeout))
                 .setCookieSpec(StandardCookieSpec.STRICT)
-                .build();
-    }
-
-    private static CloseableHttpAsyncClient trustAllCertificate(final Long conectionTimeout, final Long responseTimeout)
-            throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
-        LOG.info("Trust all SSL certificates");
-        final SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(new TrustAllStrategy()).build();
-        final PoolingAsyncClientConnectionManager connectionManager =
-                PoolingAsyncClientConnectionManagerBuilder.create()
-                        .setTlsStrategy(ClientTlsStrategyBuilder.create()
-                                .setSslContext(sslContext)
-                                .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
-                                .build())
-                        .build();
-
-        return HttpAsyncClients.custom()
-                .setConnectionManager(connectionManager)
-                .setDefaultRequestConfig(createDefaultRequestConfig(conectionTimeout, responseTimeout))
-                .setVersionPolicy(HttpVersionPolicy.NEGOTIATE)
                 .build();
     }
 }
