@@ -78,7 +78,7 @@
         <base.config>${project.basedir}/configuration/</base.config>
         <image.workdir>/o-ran-ves-adapter/</image.workdir>
         <nexus.repository.mirror>nexus3.o-ran-sc.org:10001/</nexus.repository.mirror>
-        <nexus.repository>nexus3.o-ran-sc.org:10003/o-ran-sc/</nexus.repository>
+        <nexus.repository>nexus3.o-ran-sc.org:10004/o-ran-sc/</nexus.repository>
     </properties>
 
     <dependencyManagement>
