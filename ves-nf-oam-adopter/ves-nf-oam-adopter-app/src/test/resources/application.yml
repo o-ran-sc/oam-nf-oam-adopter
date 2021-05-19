@@ -1,0 +1,24 @@
+spring.devtools.restart.log-condition-evaluation-delta: false
+logging.config: ./configuration/log4j2.yml
+server:
+  username: admin
+  password: admin
+  ssl:
+    enabled: false
+ves-collector:
+  url: someUrl
+  vesEncodedAuth: someAuth
+http-client:
+  conection-timeout: 600
+  response-timeout: 600
+pm-rest-manager:
+  synchronization-time-start: 20:00:00
+  synchronization-time-frequency: 5
+  mapping-config-path: mapping-configuration/pm-ves-message-mapping.yaml
+  ran-token-endpoint: /auth/token
+  ran-pm-endpoint: /pm/files
+  ran-time-zone-offset-endpoint: /system/timeZone
+snmp-manager:
+  host: "0.0.0.0"
+  port: 10162
+  mapping-config-path: mapping-configuration/fm-ves-message-mapping.yaml
