@@ -74,7 +74,7 @@
         <spotbugs-maven-plugin.version>4.2.3</spotbugs-maven-plugin.version>
         <swagger-codegen-maven-plugin.version>3.0.25</swagger-codegen-maven-plugin.version>
         <!--Image properties-->
-        <base.image>openjdk:11-jre-slim</base.image>
+        <base.image>library/openjdk:11-jre-slim</base.image>
         <base.config>${project.basedir}/configuration/</base.config>
         <image.workdir>/o-ran-ves-adapter/</image.workdir>
         <nexus.repository>nexus3.o-ran-sc.org:10003/o-ran-sc/</nexus.repository>

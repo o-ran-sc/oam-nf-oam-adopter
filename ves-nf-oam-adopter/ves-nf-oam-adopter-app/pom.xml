@@ -38,11 +38,7 @@
         <!--Plugins properties-->
         <swagger-codegen-maven-plugin.version>3.0.25</swagger-codegen-maven-plugin.version>
         <!--Image properties-->
-        <base.image>openjdk:11-jre-slim</base.image>
-        <base.config>${project.basedir}/configuration/</base.config>
         <image.name>ves-nf-oam-adopter</image.name>
-        <image.workdir>/o-ran-ves-adapter/</image.workdir>
-        <nexus.repository>nexus3.o-ran-sc.org:10003/o-ran-sc/</nexus.repository>
     </properties>
 
     <dependencies>
