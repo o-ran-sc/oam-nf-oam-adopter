@@ -32,5 +32,4 @@ public class ServerProperties {
     private int port;
     private String username;
     private String password;
-    private SslProperties ssl;
 }

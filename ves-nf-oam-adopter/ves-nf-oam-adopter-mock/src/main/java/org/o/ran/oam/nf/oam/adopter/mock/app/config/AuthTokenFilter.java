@@ -33,7 +33,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class AuthTokenFilter extends OncePerRequestFilter {
-    private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AuthTokenFilter.class);
 
     public static final String TOKEN = "someRandomToken";
     private final UsernamePasswordAuthenticationToken authentication;
@@ -52,7 +52,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (final Exception e) {
-            logger.error("Cannot set user authentication", e);
+            LOG.error("Cannot set user authentication", e);
         }
 
         filterChain.doFilter(request, response);

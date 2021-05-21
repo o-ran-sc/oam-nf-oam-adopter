@@ -111,8 +111,8 @@ public final class DefaultHttpRestClient implements HttpRestClient {
     public Single<ZoneId> getTimeZone(final Adapter adapter) {
         try {
             final ZoneId zoneId = zoneIdCache.get(adapter);
-            LOG.info("Adapter {} has offset {}", adapter.getHostIpAddress(),
-                    OFFSET_FORMATTER.format(zoneId.getRules().getOffset(Instant.now())));
+            final String offset = OFFSET_FORMATTER.format(zoneId.getRules().getOffset(Instant.now()));
+            LOG.info("Adapter {} has offset {}", adapter.getHostIpAddress(), offset);
             return Single.just(zoneId);
         } catch (final Exception e) {
             final Throwable cause = e.getCause();
@@ -136,7 +136,7 @@ public final class DefaultHttpRestClient implements HttpRestClient {
             request.addHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE);
             request.addHeader(HttpHeaders.AUTHORIZATION, BEARER + token);
             return Single.fromFuture(client.execute(request, null))
-                    .doOnSubscribe(result -> LOG.trace("GET Request started {} ...", request.toString()))
+                    .doOnSubscribe(result -> LOG.trace("GET Request started {} ...", request))
                     .doOnSuccess(result -> LOG.trace("GET Request finished {}", request));
         });
     }
@@ -146,9 +146,7 @@ public final class DefaultHttpRestClient implements HttpRestClient {
             final String token = sessionCache.get(adapter);
             return Single.just(token);
         } catch (final Exception e) {
-            if (e.getCause() instanceof TokenGenerationException) {
-                return Single.error(e.getCause());
-            } else if (e.getCause() instanceof ConnectionClosedException) {
+            if (e.getCause() instanceof TokenGenerationException || e.getCause() instanceof ConnectionClosedException) {
                 return Single.error(e.getCause());
             }
             return Single.error(e);

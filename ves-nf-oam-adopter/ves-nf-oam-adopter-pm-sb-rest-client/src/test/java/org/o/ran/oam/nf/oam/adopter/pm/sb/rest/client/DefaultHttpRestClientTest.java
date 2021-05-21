@@ -35,7 +35,7 @@ import org.springframework.test.annotation.DirtiesContext.MethodMode;
 @SpringBootTest(classes = {DefaultHttpRestClient.class, PmEndpointsUrlsProperties.class})
 @EnableConfigurationProperties
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class DefaultHttpRestClientTest {
+class DefaultHttpRestClientTest {
 
     private static final Adapter ADAPTER =
             Adapter.builder().hostIpAddress("150.62.25.26").username("admin").password("secretPassword").build();
@@ -47,7 +47,7 @@ public class DefaultHttpRestClientTest {
 
     @Test
     @DirtiesContext(methodMode = MethodMode.BEFORE_METHOD)
-    public void testGetFailedToken() {
+    void testGetFailedToken() {
         final SimpleHttpResponse response =
                 SimpleHttpResponse.create(HttpStatus.SC_UNAUTHORIZED, "error", ContentType.APPLICATION_JSON);
 
@@ -67,7 +67,7 @@ public class DefaultHttpRestClientTest {
     }
 
     @Test
-    public void testReadFiles() throws IOException {
+    void testReadFiles() throws IOException {
         final String tokenJson = JsonUtils.readJson("/json/tokenResponse.json");
         final SimpleHttpResponse response =
                 SimpleHttpResponse.create(HttpStatus.SC_OK, tokenJson, ContentType.APPLICATION_JSON);
@@ -95,7 +95,7 @@ public class DefaultHttpRestClientTest {
     }
 
     @Test
-    public void testReadFilesResponseFail() throws IOException {
+    void testReadFilesResponseFail() throws IOException {
         final String tokenJson = JsonUtils.readJson("/json/tokenResponse.json");
         final SimpleHttpResponse response =
                 SimpleHttpResponse.create(HttpStatus.SC_OK, tokenJson, ContentType.APPLICATION_JSON);
@@ -123,7 +123,7 @@ public class DefaultHttpRestClientTest {
     }
 
     @Test
-    public void testGetTimeOffset() throws IOException {
+    void testGetTimeOffset() throws IOException {
         final String tokenJson = JsonUtils.readJson("/json/tokenResponse.json");
         final SimpleHttpResponse response =
                 SimpleHttpResponse.create(HttpStatus.SC_OK, tokenJson, ContentType.APPLICATION_JSON);
@@ -151,7 +151,7 @@ public class DefaultHttpRestClientTest {
     }
 
     @Test
-    public void testGetTimeOffsetFail() throws IOException {
+    void testGetTimeOffsetFail() throws IOException {
         final String tokenJson = JsonUtils.readJson("/json/tokenResponse.json");
         final SimpleHttpResponse response =
                 SimpleHttpResponse.create(HttpStatus.SC_OK, tokenJson, ContentType.APPLICATION_JSON);

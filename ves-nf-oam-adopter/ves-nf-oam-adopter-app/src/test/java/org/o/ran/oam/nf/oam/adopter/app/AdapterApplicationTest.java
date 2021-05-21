@@ -82,7 +82,7 @@ class AdapterApplicationTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void testGetAllAdapters() throws Exception {
+    void testGetAllAdapters() throws Exception {
         when(deployer.getAll()).thenReturn(Collections.singletonList("mockResult"));
 
         mockMvc.perform(get("/adapters/").secure(true).contentType(MediaType.APPLICATION_JSON)).andDo(print())
@@ -91,14 +91,14 @@ class AdapterApplicationTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void testDeleteAdapter() throws Exception {
+    void testDeleteAdapter() throws Exception {
         mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void testNotFound() throws Exception {
+    void testNotFound() throws Exception {
         doThrow(NotFoundException.class).when(deployer).delete(anyString());
 
         mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true).contentType(MediaType.APPLICATION_JSON))
@@ -107,7 +107,7 @@ class AdapterApplicationTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void testAddAdapter() throws Exception {
+    void testAddAdapter() throws Exception {
 
         final Adapter adapter = new Adapter();
         adapter.setHost("172.10.55.3");
@@ -123,7 +123,7 @@ class AdapterApplicationTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void testAlreadyExist() throws Exception {
+    void testAlreadyExist() throws Exception {
 
         final Adapter adapter = new Adapter();
         adapter.setHost("172.10.55.3");
@@ -141,7 +141,7 @@ class AdapterApplicationTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void testMissingArguments() throws Exception {
+    void testMissingArguments() throws Exception {
 
         final Adapter adapter = new Adapter();
         adapter.setHost("172.10.55.3");
@@ -156,7 +156,7 @@ class AdapterApplicationTest {
     }
 
     @Test
-    public void test() {
+    void test() {
         final ZoneId zoneId = ZoneId.of("+02:00");
         when(deployer.getTimeZone("172.10.55.3")).thenReturn(zoneId);
         assertEquals(zoneId, timeZoneServiceProvider.getTimeZone("172.10.55.3"));

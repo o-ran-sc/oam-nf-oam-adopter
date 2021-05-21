@@ -30,5 +30,6 @@ import lombok.Setter;
 @Setter
 public class TimeZoneResponse {
     @SerializedName(value = "offset")
-    private @NonNull final String offset;
+    @NonNull
+    private final String offset;
 }

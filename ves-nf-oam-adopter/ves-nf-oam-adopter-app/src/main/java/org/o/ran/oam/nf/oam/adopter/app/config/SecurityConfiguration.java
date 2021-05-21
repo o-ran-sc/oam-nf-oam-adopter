@@ -20,7 +20,6 @@
 package org.o.ran.oam.nf.oam.adopter.app.config;
 
 import org.o.ran.oam.nf.oam.adopter.app.properties.ServerProperties;
-import org.o.ran.oam.nf.oam.adopter.app.properties.SslProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -43,10 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        final SslProperties ssl = properties.getSsl();
-        if (ssl != null && ssl.getEnabled() != null && ssl.getEnabled()) {
-            http.requiresChannel().anyRequest().requiresSecure();
-        }
+        http.requiresChannel().anyRequest().requiresSecure();
         http.csrf().disable()
                 .antMatcher("/adapters/**")
                 .authorizeRequests().anyRequest()
@@ -55,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Autowired
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

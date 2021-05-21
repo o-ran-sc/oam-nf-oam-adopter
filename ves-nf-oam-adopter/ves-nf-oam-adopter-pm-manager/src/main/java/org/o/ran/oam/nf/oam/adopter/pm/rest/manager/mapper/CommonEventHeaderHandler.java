@@ -36,9 +36,9 @@ final class CommonEventHeaderHandler {
     private static final String PM_NOTIFICATIONS = "PM_Notification";
 
     static CommonEventHeader toCommonEventHeader(final VesMappingConfiguration config, final String hostIp,
-            final CsvConfiguration csv, final Map<String, String> record, final int sequence) {
+            final CsvConfiguration csv, final Map<String, String> recordMap, final int sequence) {
         final CommonEventHeader header = new CommonEventHeader();
-        setMandatoryFields(config, hostIp, csv, header, record, sequence);
+        setMandatoryFields(config, hostIp, csv, header, recordMap, sequence);
         setOptionalFields(config, header);
         return header;
     }
@@ -52,7 +52,7 @@ final class CommonEventHeaderHandler {
     }
 
     private static void setMandatoryFields(final VesMappingConfiguration config, final String hostIp,
-            final CsvConfiguration csv, final CommonEventHeader header, final Map<String, String> record,
+            final CsvConfiguration csv, final CommonEventHeader header, final Map<String, String> recordMap,
             final int sequence) {
         header.setDomain(CommonEventHeader.Domain.MEASUREMENT);
         header.setEventName(CommonEventHeader.Domain.FAULT.name()
@@ -64,7 +64,7 @@ final class CommonEventHeaderHandler {
         header.setReportingEntityName(config.getReportingEntityName());
         header.setSequence((long) sequence);
         final String sourceNameField = csv.getSourceName();
-        final String sourceNameRecordValue = Optional.ofNullable(sourceNameField).map(record::get).orElse(hostIp);
+        final String sourceNameRecordValue = Optional.ofNullable(sourceNameField).map(recordMap::get).orElse(hostIp);
         final Optional<String> optRegex = Optional.ofNullable(csv.getSourceNameRegex());
         header.setSourceName(optRegex.map(regex -> sourceNameRecordValue.replaceAll(regex, ""))
             .orElse(sourceNameRecordValue));
@@ -75,8 +75,8 @@ final class CommonEventHeaderHandler {
 
         final List<String> eventId = csv.getEventId();
         final String keyIdConcat =  eventId.stream()
-                .filter(record::containsKey)
-                .map(record::get)
+                .filter(recordMap::containsKey)
+                .map(recordMap::get)
                 .collect(Collectors.joining());
         header.setEventId(UUID.nameUUIDFromBytes(keyIdConcat.getBytes(StandardCharsets.UTF_8)).toString());
     }

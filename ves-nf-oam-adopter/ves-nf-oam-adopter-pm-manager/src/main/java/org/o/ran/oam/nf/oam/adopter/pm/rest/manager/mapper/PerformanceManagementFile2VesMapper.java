@@ -108,10 +108,10 @@ public class PerformanceManagementFile2VesMapper {
         final CsvConfiguration csv = mappingConfiguration.getCsv();
         while (iterator.hasNext()) {
             final Event event = new Event();
-            final Map<String, String> record = iterator.next();
-            event.setCommonEventHeader(
-                    CommonEventHeaderHandler.toCommonEventHeader(mappingConfiguration, hostIp, csv, record, sequence));
-            event.setMeasurementFields(MeasurementFieldsHandler.toMeasurementFields(mappingConfiguration, record));
+            final Map<String, String> recordMap = iterator.next();
+            event.setCommonEventHeader(CommonEventHeaderHandler.toCommonEventHeader(mappingConfiguration, hostIp, csv,
+                recordMap,  sequence));
+            event.setMeasurementFields(MeasurementFieldsHandler.toMeasurementFields(mappingConfiguration, recordMap));
             events.add(event);
             sequence++;
             if (sequence % batchSize == 0) {

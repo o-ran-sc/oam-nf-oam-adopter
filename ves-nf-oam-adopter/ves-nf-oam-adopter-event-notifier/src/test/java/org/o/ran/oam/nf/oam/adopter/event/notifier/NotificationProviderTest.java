@@ -50,7 +50,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest(classes = {NotificationProvider.class, VesCollectorProperties.class})
 @EnableConfigurationProperties
-public class NotificationProviderTest {
+class NotificationProviderTest {
 
     @Autowired
     VesEventNotifier vesEventNotifier;

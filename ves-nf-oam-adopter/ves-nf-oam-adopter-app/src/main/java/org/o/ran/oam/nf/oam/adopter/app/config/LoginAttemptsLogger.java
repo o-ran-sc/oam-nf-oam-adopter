@@ -49,7 +49,7 @@ public class LoginAttemptsLogger {
     }
 
     @Bean
-    public InMemoryAuditEventRepository auditEventRepository() throws Exception {
+    public InMemoryAuditEventRepository auditEventRepository() {
         return new InMemoryAuditEventRepository();
     }
 }

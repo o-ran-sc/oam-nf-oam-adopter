@@ -49,7 +49,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {VesEventNotifierMock.class, PerformanceManagementMapperConfigProvider.class,
     PerformanceManagementFile2VesMapper.class, PerformanceManagementAdaptersDeployer.class})
-public class PerformanceManagementManagerTest {
+class PerformanceManagementManagerTest {
 
     @Autowired
     @Qualifier("test")
@@ -75,7 +75,7 @@ public class PerformanceManagementManagerTest {
 
     @Test
     @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
-    public void testMapping() throws IOException, InterruptedException, AlreadyPresentException {
+    void testMapping() throws IOException, InterruptedException, AlreadyPresentException {
         assertTrue(deployer.getAll().isEmpty());
         deployer.create("172.0.10.2", "admin", "admin");
         assertFalse(deployer.getAll().isEmpty());
@@ -87,7 +87,7 @@ public class PerformanceManagementManagerTest {
     }
 
     @Test
-    public void testDelete() throws AlreadyPresentException, NotFoundException {
+    void testDelete() throws AlreadyPresentException, NotFoundException {
         assertTrue(deployer.getAll().isEmpty());
         deployer.create("172.0.10.2", "admin", "admin");
         assertFalse(deployer.getAll().isEmpty());
@@ -97,24 +97,24 @@ public class PerformanceManagementManagerTest {
     }
 
     @Test
-    public void testAlreadyPresent() throws AlreadyPresentException {
+    void testAlreadyPresent() throws AlreadyPresentException {
         assertTrue(deployer.getAll().isEmpty());
         deployer.create("172.0.10.2", "admin", "admin");
         assertFalse(deployer.getAll().isEmpty());
 
         final Exception alreadyPresentException = assertThrows(AlreadyPresentException.class,
                 () -> deployer.create("172.0.10.2", "admin", "admin"));
-        assertEquals(alreadyPresentException.getMessage(), "Adapter 172.0.10.2 already present.");
+        assertEquals("Adapter 172.0.10.2 already present.", alreadyPresentException.getMessage());
     }
 
     @Test
-    public void testNotPresent() {
+    void testNotPresent() {
         final Exception exception = assertThrows(NotFoundException.class, () -> deployer.delete("172.0.10.2"));
-        assertEquals(exception.getMessage(), "Adapter 172.0.10.2 is not present.");
+        assertEquals("Adapter 172.0.10.2 is not present.", exception.getMessage());
     }
 
     @Test
-    public void testTimeZone() throws AlreadyPresentException {
+    void testTimeZone() throws AlreadyPresentException {
         deployer.create("172.0.10.2", "admin", "admin");
         assertEquals(deployer.getTimeZone("172.0.10.2"), ZoneId.of("+02:00"));
     }

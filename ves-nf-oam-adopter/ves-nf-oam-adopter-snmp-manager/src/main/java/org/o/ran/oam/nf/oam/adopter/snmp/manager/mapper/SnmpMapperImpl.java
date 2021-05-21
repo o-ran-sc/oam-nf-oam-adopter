@@ -58,7 +58,7 @@ public class SnmpMapperImpl implements SnmpMapper {
                 LOG.warn("SNMP Event type {} not supported, ignoring event.", eventType);
                 return Maybe.empty();
             }
-            LOG.info("Starting Mapping of SNMP Event type {}.", eventType);
+            LOG.info("Starting Mapping of SNMP Event.");
             LOG.trace("Pdu received {}.", pdu);
             final Event event = new Event();
             final String trapOidVariable = pdu.getVariable(SNMP_TRAP_OID).toString();

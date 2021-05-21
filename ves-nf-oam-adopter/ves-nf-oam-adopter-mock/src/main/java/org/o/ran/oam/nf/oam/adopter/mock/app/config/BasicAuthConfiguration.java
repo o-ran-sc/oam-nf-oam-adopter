@@ -52,6 +52,7 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic();
     }
 
+    @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();

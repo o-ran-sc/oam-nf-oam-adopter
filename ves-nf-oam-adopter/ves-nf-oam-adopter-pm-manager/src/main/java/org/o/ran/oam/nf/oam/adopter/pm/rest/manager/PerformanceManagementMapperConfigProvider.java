@@ -32,12 +32,10 @@ import org.apache.commons.configuration2.YAMLConfiguration;
 import org.apache.commons.configuration2.builder.ConfigurationBuilderEvent;
 import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.event.EventListener;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.o.ran.oam.nf.oam.adopter.pm.rest.manager.pojos.VesMappingConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -51,11 +49,6 @@ public class PerformanceManagementMapperConfigProvider  {
     private String mappingFilePath;
     private ReloadingFileBasedConfigurationBuilder<YAMLConfiguration> builder;
 
-    @Autowired
-    public PerformanceManagementMapperConfigProvider() {
-
-    }
-
     /**
      * Initialize Service.
      */
@@ -65,9 +58,9 @@ public class PerformanceManagementMapperConfigProvider  {
         final URI filePath = Paths.get(mappingFilePath).toUri();
         builder = new ReloadingFileBasedConfigurationBuilder<>(YAMLConfiguration.class)
                           .configure(new Parameters().hierarchical().setURL(filePath.toURL()));
-        builder.addEventListener(ConfigurationBuilderEvent.CONFIGURATION_REQUEST, (EventListener) event -> {
+        builder.addEventListener(ConfigurationBuilderEvent.CONFIGURATION_REQUEST, event -> {
             builder.getReloadingController().checkForReloading(null);
-            LOG.debug("Reloading {}", filePath.toString());
+            LOG.debug("Reloading {}", filePath);
         });
         //Test initial configuration
         builder.getConfiguration();

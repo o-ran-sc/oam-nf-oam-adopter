@@ -19,8 +19,6 @@
 
 package org.o.ran.oam.nf.oam.adopter.pm.rest.manager;
 
-import static org.eclipse.jdt.annotation.Checks.requireNonNull;
-
 import com.google.common.collect.ImmutableList;
 import java.time.ZoneId;
 import java.util.List;
@@ -66,7 +64,7 @@ public final class AdaptersDeployer implements PerformanceManagementAdaptersDepl
 
     @Override
     public synchronized void delete(final String host) throws NotFoundException {
-        LOG.info("Adapter PM adapter removed {}", requireNonNull(host));
+        LOG.info("Adapter PM adapter removed {}", host);
         final PerformanceManagementRestAgent adapter = adapters.remove(host);
         if (adapter == null) {
             throw new NotFoundException(host);

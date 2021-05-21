@@ -61,29 +61,29 @@ final class SnmpTrapListener implements CommandResponder, Runnable {
         this.timeZoneOffsetService = timeZoneOffsetService;
     }
 
-    @SuppressFBWarnings("WA_NOT_IN_LOOP")
     @Override
     public synchronized void run() {
-        try {
-            final UdpAddress udpAddress = new UdpAddress(hostPortAddress);
-            final DefaultUdpTransportMapping snmpTarget = new DefaultUdpTransportMapping(udpAddress);
+        try (final DefaultUdpTransportMapping snmpTarget = new DefaultUdpTransportMapping(
+                new UdpAddress(hostPortAddress))) {
             final ThreadPool threadPool = ThreadPool.create("SNMP_V2_Listener", THREADS_SIZE);
             final MessageDispatcher dispatcher =
                     new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
             dispatcher.addMessageProcessingModel(new MPv2c());
-
-            final Snmp snmp = new Snmp(dispatcher, snmpTarget);
-            snmp.addCommandResponder(this);
-
-            snmpTarget.listen();
-            LOG.debug("Listening on {}", snmpTarget);
-            try {
-                wait();
-            } catch (final InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
+            listenSnmp(dispatcher, snmpTarget);
         } catch (final IOException e) {
             LOG.error("Error occurred while listening to SNMP messages: {}", e.getMessage());
+        }
+    }
+
+    @SuppressFBWarnings("WA_NOT_IN_LOOP")
+    private void listenSnmp(final MessageDispatcher dispatcher, final DefaultUdpTransportMapping snmpTarget) {
+        try (final Snmp snmp = new Snmp(dispatcher, snmpTarget)) {
+            snmp.addCommandResponder(this);
+            snmpTarget.listen();
+            LOG.debug("Listening on {}", snmpTarget);
+            wait();
+        } catch (final InterruptedException | IOException ex) {
+            Thread.currentThread().interrupt();
         }
     }
 

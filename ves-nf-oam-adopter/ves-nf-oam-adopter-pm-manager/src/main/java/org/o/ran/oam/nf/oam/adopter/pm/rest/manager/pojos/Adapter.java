@@ -28,7 +28,7 @@ import lombok.NonNull;
 @Getter
 @Builder
 public final class Adapter {
-    private @NonNull final String hostIpAddress;
-    private @NonNull final String username;
-    private @NonNull final String password;
+    @NonNull private final String hostIpAddress;
+    @NonNull private final String username;
+    @NonNull private final String password;
 }

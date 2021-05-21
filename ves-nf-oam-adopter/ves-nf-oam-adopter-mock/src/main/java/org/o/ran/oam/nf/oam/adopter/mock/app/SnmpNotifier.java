@@ -47,7 +47,7 @@ public class SnmpNotifier {
 
     private final HashMap<String, String> alarmTrap;
     private final HashMap<String, String> clearTrap;
-    private final CommunityTarget target;
+    private final CommunityTarget<UdpAddress> target;
 
     /**
      * Default constructor.
@@ -74,7 +74,7 @@ public class SnmpNotifier {
         sendTrap(target, clearTrap, "clear");
     }
 
-    private static void sendTrap(final CommunityTarget target, final HashMap<String, String> trap,
+    private static void sendTrap(final CommunityTarget<UdpAddress> target, final HashMap<String, String> trap,
             final String trapType) throws IOException {
         final PDU pdu = new PDU();
         pdu.setType(PDU.TRAP);
@@ -86,10 +86,9 @@ public class SnmpNotifier {
             }
         });
 
-
-        final Snmp snmp = new Snmp(new DefaultUdpTransportMapping());
-        snmp.send(pdu, target, null, null);
-        snmp.close();
-        LOG.info("Trap {} sent successfully.", trapType);
+        try (final Snmp snmp = new Snmp(new DefaultUdpTransportMapping())) {
+            snmp.send(pdu, target, null, null);
+            LOG.info("Trap {} sent successfully.", trapType);
+        }
     }
 }

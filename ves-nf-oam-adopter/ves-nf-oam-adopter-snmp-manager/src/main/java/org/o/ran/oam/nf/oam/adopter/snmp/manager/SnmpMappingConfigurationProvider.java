@@ -32,7 +32,6 @@ import org.apache.commons.configuration2.YAMLConfiguration;
 import org.apache.commons.configuration2.builder.ConfigurationBuilderEvent;
 import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.event.EventListener;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.pojos.VesMappingConfiguration;
 import org.slf4j.Logger;
@@ -62,7 +61,7 @@ public class SnmpMappingConfigurationProvider {
         final URI filePath = Paths.get(mappingFilePath).toUri();
         builder = new ReloadingFileBasedConfigurationBuilder<>(YAMLConfiguration.class)
                 .configure(new Parameters().hierarchical().setURL(filePath.toURL()));
-        builder.addEventListener(ConfigurationBuilderEvent.CONFIGURATION_REQUEST, (EventListener) event -> {
+        builder.addEventListener(ConfigurationBuilderEvent.CONFIGURATION_REQUEST, event -> {
             builder.getReloadingController().checkForReloading(null);
             LOG.info("Reloading {}", filePath);
         });

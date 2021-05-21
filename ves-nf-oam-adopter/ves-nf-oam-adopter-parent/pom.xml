@@ -41,16 +41,27 @@
             ${project.reporting.outputDirectory}/jacoco-aggregate
         </jacoco.reportDirectory.aggregate>
         <sonar.coverage.jacoco.xmlReportPaths>
-            ../ves-nf-oam-adopter-event-notifier/target/site/jacoco-ut/jacoco.xml,
-            ../ves-nf-oam-adopter-event-notifier/target/site/jacoco-aggregate/jacoco.xml,
-            ../ves-nf-oam-adopter-snmp-manager/target/site/jacoco-ut/jacoco.xml,
-            ../ves-nf-oam-adopter-snmp-manager/target/site/jacoco-aggregate/jacoco.xml,
-            ../ves-nf-oam-adopter-pm-manager/target/site/jacoco-ut/jacoco.xml,
-            ../ves-nf-oam-adopter-pm-manager/target/site/jacoco-aggregate/jacoco.xml,
-            ../ves-nf-oam-adopter-pm-sb-rest-client/target/site/jacoco-ut/jacoco.xml,
-            ../ves-nf-oam-adopter-pm-sb-rest-client/target/site/jacoco-aggregate/jacoco.xml
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-event-notifier/target/site/jacoco-ut/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-event-notifier/target/site/jacoco-aggregate/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-snmp-manager/target/site/jacoco-ut/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-snmp-manager/target/site/jacoco-aggregate/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-pm-manager/target/site/jacoco-ut/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-pm-manager/target/site/jacoco-aggregate/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-pm-sb-rest-client/target/site/jacoco-ut/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-pm-sb-rest-client/target/site/jacoco-aggregate/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-app/target/site/jacoco-ut/jacoco.xml,
+            ../ves-nf-oam-adopter/ves-nf-oam-adopter-app/target/site/jacoco-aggregate/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
-        <sonar.scanner.version>3.8.0.2131</sonar.scanner.version>
+        <sonar.scanner.version>4.4.0.2170</sonar.scanner.version>
+        <sonar.exclusions>
+            **/api/**,
+            **/model/**,
+            **/pojos/**,
+            **/configurations/**,
+            **/properties/**,
+            **/config/**,
+            **/dto/**
+        </sonar.exclusions>
         <!--Dependency Versions-->
         <commons-configuration2.version>2.7</commons-configuration2.version>
         <commons-io.version>2.6</commons-io.version>
