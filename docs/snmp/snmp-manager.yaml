@@ -1,0 +1,4 @@
+snmp-manager:
+  host: "0.0.0.0"
+  port: 162
+  mapping-config-path: "mapping-configuration/fm-ves-message-mapping.yaml"

@@ -2,7 +2,12 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 .. Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
 
-User Guide
-==========
+NF OAM Adopter User Guide
+=========================
 
-This document provides a quickstart for users of the NF OAM Adopter.
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   ./snmp/index.rst
+   ./pm/index.rst

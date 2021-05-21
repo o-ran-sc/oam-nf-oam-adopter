@@ -1,0 +1,7 @@
+pm-rest-manager:
+  synchronization-time-start: 18:00:00
+  synchronization-time-frequency: 60
+  mapping-config-path: ${PM_MAPPING_FILE_PATH:mapping-configuration/pm-ves-message-mapping.yaml}
+  ran-token-endpoint: /auth/token
+  ran-pm-endpoint: /pm/files
+  ran-time-zone-offset-endpoint: /system/timeZone

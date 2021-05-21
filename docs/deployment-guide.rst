@@ -5,4 +5,16 @@
 Deployment Guide
 ================
 
-This document provides a quickstart for deployment of the NF OAM Adopter.
+Build
+
+.. code-block:: bash
+
+    cd ves-nf-oam-adopter
+    mvn clean install -Pdocker
+
+Go to solution folder and execute
+
+.. code-block:: bash
+
+    cd solution
+    docker-compose up
