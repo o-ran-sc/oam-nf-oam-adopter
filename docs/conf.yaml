@@ -1,0 +1,5 @@
+---
+project_cfg: oran
+project: nf-oam-adopter
+
+default-version: master
