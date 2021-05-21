@@ -71,8 +71,11 @@ public class PerformanceManagementFile2VesMapper {
         try {
             ZipEntry entry;
             final var mappingConfiguration = pmConfigProvider.getVesMappingConfiguration();
+            int totalSizeEntry = 0;
             while ((entry = zipInputStream.getNextEntry()) != null) {
-                if (entry.getSize() > THRESHOLD_SIZE  || entry.getSize() == -1) {
+                final var size = entry.getSize();
+                totalSizeEntry += size;
+                if (totalSizeEntry > THRESHOLD_SIZE  || size == -1) {
                     throw new IllegalStateException("File to be unzipped too big.");
                 }
                 final String entryName = entry.getName();
