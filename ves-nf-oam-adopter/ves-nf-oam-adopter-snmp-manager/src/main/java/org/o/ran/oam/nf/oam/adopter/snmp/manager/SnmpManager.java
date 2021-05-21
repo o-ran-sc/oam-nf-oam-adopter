@@ -24,14 +24,14 @@ import org.o.ran.oam.nf.oam.adopter.api.VesEventNotifier;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.api.TimeZoneOffsetService;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.mapper.SnmpMapper;
 
-public class SnmpManagerImpl implements AutoCloseable {
+public class SnmpManager implements AutoCloseable {
     private static final String SNMP_MANAGER_THREAD = "SnmpManager";
     private final Thread snmpThread;
 
     /**
      * Default constructor.
      */
-    public SnmpManagerImpl(final String host, final int port, final SnmpMapper mapper,
+    public SnmpManager(final String host, final int port, final SnmpMapper mapper,
             final VesEventNotifier vesEventNotifier, final TimeZoneOffsetService timeZoneOffsetService) {
         final var trapListener = new SnmpTrapListener(host, port, mapper, vesEventNotifier, timeZoneOffsetService);
         this.snmpThread = new Thread(trapListener, SNMP_MANAGER_THREAD);

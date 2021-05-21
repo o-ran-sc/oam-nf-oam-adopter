@@ -47,7 +47,7 @@ class SnmpManagerTest {
     @Autowired
     private SnmpManagerProperties snmpManagerProperties;
     @Autowired
-    private SnmpManagerImpl snmpManager;
+    private SnmpManager snmpManager;
     @MockBean
     private TimeZoneOffsetService timeZoneOffsetService;
 

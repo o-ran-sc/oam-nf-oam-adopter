@@ -20,7 +20,7 @@
 package org.o.ran.oam.nf.oam.adopter.snmp.manager.configurations;
 
 import org.o.ran.oam.nf.oam.adopter.api.VesEventNotifier;
-import org.o.ran.oam.nf.oam.adopter.snmp.manager.SnmpManagerImpl;
+import org.o.ran.oam.nf.oam.adopter.snmp.manager.SnmpManager;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.api.TimeZoneOffsetService;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.mapper.SnmpMapper;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.properties.SnmpManagerProperties;
@@ -50,8 +50,8 @@ public class SnmpManagerConfig {
     }
 
     @Bean
-    public SnmpManagerImpl getSnmpManagerService() {
-        return new SnmpManagerImpl(snmpManagerProperties.getHost(), snmpManagerProperties.getPort(), snmpMapper,
+    public SnmpManager getSnmpManagerService() {
+        return new SnmpManager(snmpManagerProperties.getHost(), snmpManagerProperties.getPort(), snmpMapper,
                 vesEventNotifier, timeZoneOffsetService);
     }
 }
