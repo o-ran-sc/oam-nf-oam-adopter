@@ -56,7 +56,7 @@ public class SnmpNotifier {
     public SnmpNotifier(final SnmpProperties snmpProperties) {
         this.alarmTrap = snmpProperties.getAlarmTrap();
         this.clearTrap = snmpProperties.getClearTrap();
-        this.target = new CommunityTarget();
+        this.target = new CommunityTarget<>();
         target.setCommunity(new OctetString("public"));
         target.setVersion(SnmpConstants.version2c);
         target.setAddress(new UdpAddress(snmpProperties.getDestiny()));

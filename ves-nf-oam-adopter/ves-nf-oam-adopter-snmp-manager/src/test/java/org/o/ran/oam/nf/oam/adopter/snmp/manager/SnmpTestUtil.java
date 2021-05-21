@@ -25,7 +25,6 @@ import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
 import org.snmp4j.mp.SnmpConstants;
-import org.snmp4j.smi.Address;
 import org.snmp4j.smi.OID;
 import org.snmp4j.smi.OctetString;
 import org.snmp4j.smi.TimeTicks;
@@ -45,8 +44,8 @@ public class SnmpTestUtil {
     public static final OID NOTIFICATION_INTERFACE = new OID(new int[] {1, 3, 6, 1, 4, 1, 1007, 0, 0, 1, 0, 7});
 
     private static void sndTrap(final PDU trap, final String host, final String port) throws IOException {
-        final Address targetaddress = new UdpAddress(host + "/" + port);
-        final CommunityTarget target = new CommunityTarget();
+        final UdpAddress targetaddress = new UdpAddress(host + "/" + port);
+        final CommunityTarget<UdpAddress> target = new CommunityTarget<>();
         target.setCommunity(new OctetString("public"));
         target.setVersion(SnmpConstants.version2c);
         target.setAddress(targetaddress);

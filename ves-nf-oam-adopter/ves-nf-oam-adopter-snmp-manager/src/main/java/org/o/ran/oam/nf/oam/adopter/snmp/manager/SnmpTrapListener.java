@@ -76,7 +76,8 @@ final class SnmpTrapListener implements CommandResponder, Runnable {
     }
 
     @SuppressFBWarnings("WA_NOT_IN_LOOP")
-    private void listenSnmp(final MessageDispatcher dispatcher, final DefaultUdpTransportMapping snmpTarget) {
+    private synchronized void listenSnmp(final MessageDispatcher dispatcher,
+            final DefaultUdpTransportMapping snmpTarget) {
         try (final Snmp snmp = new Snmp(dispatcher, snmpTarget)) {
             snmp.addCommandResponder(this);
             snmpTarget.listen();

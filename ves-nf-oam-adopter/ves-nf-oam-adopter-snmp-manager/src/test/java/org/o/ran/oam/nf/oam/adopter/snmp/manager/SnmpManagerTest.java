@@ -40,7 +40,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {VesEventNotifierMock.class, SnmpMappingConfigurationProvider.class,
     SnmpMapperImpl.class, SnmpManagerProperties.class, SnmpManagerConfig.class})
-public class SnmpManagerTest {
+class SnmpManagerTest {
     @Autowired
     @Qualifier("test")
     private VesEventNotifierMock listener;
@@ -56,12 +56,13 @@ public class SnmpManagerTest {
         when(timeZoneOffsetService.getTimeZone(anyString())).thenReturn(ZoneId.of("+02:00"));
     }
 
-    private static String getVesNotification(final VesEventNotifierMock notificationProvider)
-            throws InterruptedException {
-        for (int i = 0; i < 1000; i++) {
-            Thread.sleep(100);
-            if (notificationProvider.getEvent() != null) {
-                break;
+    private String getVesNotification(final VesEventNotifierMock notificationProvider) throws InterruptedException {
+        synchronized (notificationProvider) {
+            for (int i = 0; i < 1000; i++) {
+                notificationProvider.wait(200);
+                if (notificationProvider.getEvent() != null) {
+                    break;
+                }
             }
         }
         final String event = notificationProvider.getEvent();
@@ -71,7 +72,7 @@ public class SnmpManagerTest {
     }
 
     @Test
-    public void testDefaultTrap() throws Exception {
+    void testDefaultTrap() throws Exception {
         SnmpTestUtil
                 .sendDefaultTrapV2(snmpManagerProperties.getHost(), Integer.toString(snmpManagerProperties.getPort()));
         final String expected = JsonUtils.readJson("/json/VESMessageDefaultTrap.json");
@@ -80,7 +81,7 @@ public class SnmpManagerTest {
     }
 
     @Test
-    public void testBoxDown() throws Exception {
+    void testBoxDown() throws Exception {
         SnmpTestUtil.sendPortDownTrapV2(snmpManagerProperties.getHost(),
                 Integer.toString(snmpManagerProperties.getPort()));
         final String expected = JsonUtils.readJson("/json/PortDOWN.json");

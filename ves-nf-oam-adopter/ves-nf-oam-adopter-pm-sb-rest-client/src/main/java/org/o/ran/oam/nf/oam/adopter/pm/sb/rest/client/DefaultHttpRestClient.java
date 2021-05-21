@@ -65,13 +65,8 @@ public final class DefaultHttpRestClient implements HttpRestClient {
             CacheBuilder.newBuilder().refreshAfterWrite(59, TimeUnit.MINUTES).build(new CacheLoader<>() {
                 @Override
                 public String load(final Adapter adapter) throws ExecutionException, InterruptedException {
-                    try {
-                        return returnToken(DefaultHttpRestClient.this.client, DefaultHttpRestClient.this.tokenEndpoint,
-                                adapter);
-                    } catch (final Exception error) {
-                        LOG.error("Failed to read time zone", error);
-                        throw error;
-                    }
+                    return returnToken(DefaultHttpRestClient.this.client, DefaultHttpRestClient.this.tokenEndpoint,
+                            adapter);
                 }
             });
 

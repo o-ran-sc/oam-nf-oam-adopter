@@ -56,10 +56,9 @@ public final class DownloadPerformanceManagementFilesHandler {
         final String statusLine = new StatusLine(response).toString();
         final ContentType contentType = response.getContentType();
         final SimpleBody entity = response.getBody();
-        if (response.getCode() == HttpStatus.SC_OK && entity != null) {
-            if (ContentType.APPLICATION_OCTET_STREAM.getMimeType().equals(contentType.getMimeType())) {
-                return Single.just(entity);
-            }
+        if (response.getCode() == HttpStatus.SC_OK && entity != null && ContentType.APPLICATION_OCTET_STREAM
+            .getMimeType().equals(contentType.getMimeType())) {
+            return Single.just(entity);
         }
         return Single.error(new PerformanceManagementException(
                 "Download files from " + adapter.getHostIpAddress() + " failed: " + statusLine));

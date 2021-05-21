@@ -47,6 +47,7 @@ public class PerformanceManagementFile2VesMapper {
 
     private static final String CSV_EXTENSION = ".csv";
     private final PerformanceManagementMapperConfigProvider pmConfigProvider;
+    private static final int THRESHOLD_SIZE  = 1000000000; // 1 GB
 
     @Autowired
     public PerformanceManagementFile2VesMapper(final PerformanceManagementMapperConfigProvider pmConfigProvider) {
@@ -71,6 +72,9 @@ public class PerformanceManagementFile2VesMapper {
             ZipEntry entry;
             final VesMappingConfiguration mappingConfiguration = pmConfigProvider.getVesMappingConfiguration();
             while ((entry = zipInputStream.getNextEntry()) != null) {
+                if (entry.getSize() > THRESHOLD_SIZE  || entry.getSize() == -1) {
+                    throw new IllegalStateException("File to be unzipped too big.");
+                }
                 final String entryName = entry.getName();
                 if (!entryName.endsWith(CSV_EXTENSION)) {
                     return Single.error(new Exception("Wrong file type :" + entryName));

@@ -19,7 +19,6 @@
 
 package org.o.ran.oam.nf.oam.adopter.pm.rest.manager;
 
-import static java.lang.Thread.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -122,11 +121,13 @@ class PerformanceManagementManagerTest {
     private static List<String> getVesNotification(final VesEventNotifierMock listener, final int expectedSize)
             throws InterruptedException {
         List<String> events = null;
-        for (int i = 0; i < 100000; i++) {
-            sleep(1000);
-            events = listener.getEvents();
-            if (events != null && !events.isEmpty() && events.size() == expectedSize) {
-                break;
+        synchronized (listener) {
+            for (int i = 0; i < 100000; i++) {
+                listener.wait(1000);
+                events = listener.getEvents();
+                if (events != null && !events.isEmpty() && events.size() == expectedSize) {
+                    break;
+                }
             }
         }
         return events;
