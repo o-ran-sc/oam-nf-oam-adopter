@@ -112,13 +112,13 @@ Datatype: commonEventHeader
      - none
    * - nfVendorName
      - no
-     - ISCO
+     - SOME-VENDOR
      - yes
      - no
      - value configurable via mapping config file.
    * - reportingEntityId
      - no
-     - ONAP-ISCO-ADAPTER
+     - ONAP-NF-OAM-SOME-VENDOR-ADAPTER
      - yes
      - no
      - value configurable via mapping config file.
