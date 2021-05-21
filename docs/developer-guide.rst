@@ -5,4 +5,7 @@
 Developer Guide
 ===============
 
-This document provides a quickstart for developers of the NF OAM Adopter.
+Architecture design of FM / PM Adopter
+
+.. image:: nf-oam-adopter-diagram.png
+  :alt: Diagram
