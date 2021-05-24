@@ -19,59 +19,24 @@
 
 package org.o.ran.oam.nf.oam.adopter.pm.rest.manager;
 
-import static java.util.Objects.requireNonNull;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.nio.file.Paths;
-import javax.annotation.PostConstruct;
-import org.apache.commons.configuration2.YAMLConfiguration;
-import org.apache.commons.configuration2.builder.ConfigurationBuilderEvent;
-import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
-import org.apache.commons.configuration2.builder.fluent.Parameters;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.o.ran.oam.nf.oam.adopter.pm.rest.manager.pojos.VesMappingConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.o.ran.oam.nf.oam.adopter.spi.MapperConfigProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PerformanceManagementMapperConfigProvider  {
+public class PerformanceManagementMapperConfigProvider extends MapperConfigProvider<VesMappingConfiguration> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PerformanceManagementMapperConfigProvider.class);
-
-    private static final ObjectMapper YAML_READER = new ObjectMapper(new YAMLFactory());
     @Value("${pm-rest-manager.mapping-config-path:#{null}}")
     private String mappingFilePath;
-    private ReloadingFileBasedConfigurationBuilder<YAMLConfiguration> builder;
 
-    /**
-     * Initialize Service.
-     */
-    @PostConstruct
-    public void init() throws IOException, ConfigurationException {
-        requireNonNull(mappingFilePath);
-        final var filePath = Paths.get(mappingFilePath).toUri();
-        builder = new ReloadingFileBasedConfigurationBuilder<>(YAMLConfiguration.class)
-                          .configure(new Parameters().hierarchical().setURL(filePath.toURL()));
-        builder.addEventListener(ConfigurationBuilderEvent.CONFIGURATION_REQUEST, event -> {
-            builder.getReloadingController().checkForReloading(null);
-            LOG.debug("Reloading {}", filePath);
-        });
-        //Test initial configuration
-        builder.getConfiguration();
+    @Override
+    public String getMappingFilePath() {
+        return mappingFilePath;
     }
 
-    /**
-     * Provide VES Mapping configuration.
-     */
-    public VesMappingConfiguration getVesMappingConfiguration() throws ConfigurationException, IOException {
-        final YAMLConfiguration configuration = builder.getConfiguration();
-        final var output = new StringWriter();
-        configuration.write(output);
-        return YAML_READER.readValue(output.toString(), VesMappingConfiguration.class);
+    @Override
+    public Class<VesMappingConfiguration> getClazz() {
+        return VesMappingConfiguration.class;
     }
 }
