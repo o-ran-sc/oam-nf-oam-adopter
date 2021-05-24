@@ -55,7 +55,7 @@ public class PerformanceManagementMapperConfigProvider  {
     @PostConstruct
     public void init() throws IOException, ConfigurationException {
         requireNonNull(mappingFilePath);
-        final URI filePath = Paths.get(mappingFilePath).toUri();
+        final var filePath = Paths.get(mappingFilePath).toUri();
         builder = new ReloadingFileBasedConfigurationBuilder<>(YAMLConfiguration.class)
                           .configure(new Parameters().hierarchical().setURL(filePath.toURL()));
         builder.addEventListener(ConfigurationBuilderEvent.CONFIGURATION_REQUEST, event -> {
@@ -71,7 +71,7 @@ public class PerformanceManagementMapperConfigProvider  {
      */
     public VesMappingConfiguration getVesMappingConfiguration() throws ConfigurationException, IOException {
         final YAMLConfiguration configuration = builder.getConfiguration();
-        final StringWriter output = new StringWriter();
+        final var output = new StringWriter();
         configuration.write(output);
         return YAML_READER.readValue(output.toString(), VesMappingConfiguration.class);
     }

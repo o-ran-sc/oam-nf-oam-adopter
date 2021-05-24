@@ -78,7 +78,7 @@ public final class NotificationProvider implements VesEventNotifier {
     }
 
     private Completable notify(final String url, final String payload) {
-        final SimpleHttpRequest request = SimpleHttpRequests.post(url);
+        final var request = SimpleHttpRequests.post(url);
         request.setBody(payload, ContentType.APPLICATION_JSON);
         request.setHeader(HttpHeaders.AUTHORIZATION, authHeader);
         return Single.fromFuture(httpClient.execute(request, null))
@@ -89,7 +89,7 @@ public final class NotificationProvider implements VesEventNotifier {
     }
 
     private static Completable validatePost(final SimpleHttpResponse response) {
-        final String statusLine = new StatusLine(response).toString();
+        final var statusLine = new StatusLine(response).toString();
         final String entity;
         final int code = response.getCode();
         if (code == HttpStatus.SC_OK || code == HttpStatus.SC_ACCEPTED) {

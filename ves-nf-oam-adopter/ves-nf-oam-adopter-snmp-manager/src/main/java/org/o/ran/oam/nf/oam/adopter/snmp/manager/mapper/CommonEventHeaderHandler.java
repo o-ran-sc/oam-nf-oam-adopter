@@ -39,7 +39,7 @@ final class CommonEventHeaderHandler {
     static CommonEventHeader toCommonEventHeader(final UdpAddress peerAddress,
             final VesMappingConfiguration vesMappingConfig, final TrapsMappingConfiguration mappingConfiguration,
             final PDU pdu, final String timeZone) {
-        final CommonEventHeader header = new CommonEventHeader();
+        final var header = new CommonEventHeader();
         setMandatoryFields(header, peerAddress, vesMappingConfig, mappingConfiguration, pdu);
         setOptionalFields(header, vesMappingConfig, mappingConfiguration, pdu, timeZone);
         return header;
@@ -51,7 +51,7 @@ final class CommonEventHeaderHandler {
         header.setNfVendorName(vesMappingConfig.getNfVendorName());
         final String oidEntityId = mappingConfiguration.getOidReportingEntityID();
         if (oidEntityId != null) {
-            final Variable uuid = pdu.getVariable(new OID(oidEntityId));
+            final var uuid = pdu.getVariable(new OID(oidEntityId));
             header.setReportingEntityId(uuid == null ? null : uuid.toString());
         }
         header.setNfNamingCode(null); //NOP
@@ -76,7 +76,7 @@ final class CommonEventHeaderHandler {
 
         final String oidStartEpoch = mappingConfiguration.getEventStartEpochMicrosec();
         if (oidStartEpoch != null) {
-            final Variable uuid = pdu.getVariable(new OID(oidStartEpoch));
+            final var uuid = pdu.getVariable(new OID(oidStartEpoch));
             header.setStartEpochMicrosec(uuid == null ? null : Long.valueOf(uuid.toString()));
         } else {
             header.setStartEpochMicrosec(System.currentTimeMillis());
@@ -84,7 +84,7 @@ final class CommonEventHeaderHandler {
 
         final String oidLastEpoch = mappingConfiguration.getEventLastEpochMicrosec();
         if (oidLastEpoch != null) {
-            final Variable uuid = pdu.getVariable(new OID(oidLastEpoch));
+            final var uuid = pdu.getVariable(new OID(oidLastEpoch));
             header.setLastEpochMicrosec(uuid == null ? null : Long.valueOf(uuid.toString()));
         } else {
             header.setLastEpochMicrosec(System.currentTimeMillis());
@@ -95,7 +95,7 @@ final class CommonEventHeaderHandler {
         header.setSequence(extractEventSequence(mappingConfiguration, pdu));
         final String oidSourceName = mappingConfiguration.getOidSourceName();
         if (oidSourceName != null) {
-            final Variable sourceName = pdu.getVariable(new OID(oidSourceName));
+            final var sourceName = pdu.getVariable(new OID(oidSourceName));
             header.setSourceName(sourceName.toString());
         } else {
             header.setSourceName(peerAddress.getInetAddress().getHostAddress());

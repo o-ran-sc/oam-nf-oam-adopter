@@ -60,10 +60,9 @@ public class SnmpMapperImpl implements SnmpMapper {
             }
             LOG.info("Starting Mapping of SNMP Event.");
             LOG.trace("Pdu received {}.", pdu);
-            final Event event = new Event();
-            final String trapOidVariable = pdu.getVariable(SNMP_TRAP_OID).toString();
-            final VesMappingConfiguration vesMappingConfig =
-                    snmpMappingConfigurationProvider.getVesMappingConfiguration();
+            final var event = new Event();
+            final var trapOidVariable = pdu.getVariable(SNMP_TRAP_OID).toString();
+            final var vesMappingConfig = snmpMappingConfigurationProvider.getVesMappingConfiguration();
             final Map<String, TrapsMappingConfiguration> trapsDescriptions = vesMappingConfig.getTraps().stream()
                     .collect(Collectors.toMap(TrapsMappingConfiguration::getOid, trapsDescription -> trapsDescription));
             final TrapsMappingConfiguration trapsDescription =
@@ -71,7 +70,7 @@ public class SnmpMapperImpl implements SnmpMapper {
             event.setCommonEventHeader(CommonEventHeaderHandler.toCommonEventHeader(peerAddress, vesMappingConfig,
                     trapsDescription, pdu, timeZone));
             event.setFaultFields(FaultFieldsHandler.toFaultFields(trapsDescription, pdu));
-            final CommonEventFormat302ONAP eventFormat = new CommonEventFormat302ONAP();
+            final var eventFormat = new CommonEventFormat302ONAP();
             eventFormat.setEvent(event);
             eventFormat.setEventList(null);
             LOG.info("Mapping of SNMP Event type {} finished.", eventType);

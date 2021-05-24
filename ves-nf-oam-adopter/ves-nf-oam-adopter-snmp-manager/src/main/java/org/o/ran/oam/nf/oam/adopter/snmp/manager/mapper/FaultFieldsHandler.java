@@ -40,7 +40,7 @@ final class FaultFieldsHandler {
     private static final String SNMP_UNKNOWN = "Unknown";
 
     public static FaultFields toFaultFields(final TrapsMappingConfiguration trapsDescription, final PDU pdu) {
-        final FaultFields faultFields = new FaultFields();
+        final var faultFields = new FaultFields();
         setMandatoryFields(faultFields, trapsDescription, pdu);
         setOptionalFields(faultFields, trapsDescription, pdu);
         return faultFields;
@@ -55,7 +55,7 @@ final class FaultFieldsHandler {
         final String descOid = trapsDescription.getOidSpecificProblemDesc();
         faultFields.setSpecificProblem(SNMP_FAULT);
         if (descOid != null && !DEFAULT.equals(descOid)) {
-            final Variable desc = pdu.getVariable(new OID(descOid));
+            final var desc = pdu.getVariable(new OID(descOid));
             faultFields.setSpecificProblem(desc == null ? SNMP_FAULT : desc.toString());
         }
         faultFields.setVfStatus(FaultFields.VfStatus.ACTIVE);
@@ -70,7 +70,7 @@ final class FaultFieldsHandler {
         faultFields.setAlarmAdditionalInformation(map.isEmpty() ? null : map);
         final String interfaceOid = trapsDescription.getOidAlarmInterfaceName();
         if (interfaceOid != null) {
-            final Variable desc = pdu.getVariable(new OID(interfaceOid));
+            final var desc = pdu.getVariable(new OID(interfaceOid));
             faultFields.setAlarmInterfaceA(desc == null ? SNMP_FAULT : desc.toString());
         }
         final String eCategory = trapsDescription.getEventCategory();

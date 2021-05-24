@@ -105,7 +105,7 @@ public final class DefaultHttpRestClient implements HttpRestClient {
     @Override
     public Single<ZoneId> getTimeZone(final Adapter adapter) {
         try {
-            final ZoneId zoneId = zoneIdCache.get(adapter);
+            final var zoneId = zoneIdCache.get(adapter);
             final String offset = OFFSET_FORMATTER.format(zoneId.getRules().getOffset(Instant.now()));
             LOG.info("Adapter {} has offset {}", adapter.getHostIpAddress(), offset);
             return Single.just(zoneId);
@@ -126,8 +126,7 @@ public final class DefaultHttpRestClient implements HttpRestClient {
      */
     public Single<SimpleHttpResponse> get(final Adapter adapter, final String url) {
         return getToken(adapter).flatMap(token -> {
-            final SimpleHttpRequest request =
-                SimpleHttpRequests.get(HTTPS + adapter.getHostIpAddress() + url);
+            final var request = SimpleHttpRequests.get(HTTPS + adapter.getHostIpAddress() + url);
             request.addHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE);
             request.addHeader(HttpHeaders.AUTHORIZATION, BEARER + token);
             return Single.fromFuture(client.execute(request, null))

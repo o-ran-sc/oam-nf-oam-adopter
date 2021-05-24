@@ -66,11 +66,11 @@ public class PerformanceManagementFile2VesMapper {
         LOG.info("Converting ZIP files to VES Message started");
         final List<CommonEventFormat302ONAP> listOfNotifications = new ArrayList<>();
         final CsvSchema schema = CsvSchema.emptySchema().withHeader();
-        final CsvMapper mapper = new CsvMapper();
+        final var mapper = new CsvMapper();
         mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, false);
         try {
             ZipEntry entry;
-            final VesMappingConfiguration mappingConfiguration = pmConfigProvider.getVesMappingConfiguration();
+            final var mappingConfiguration = pmConfigProvider.getVesMappingConfiguration();
             while ((entry = zipInputStream.getNextEntry()) != null) {
                 if (entry.getSize() > THRESHOLD_SIZE  || entry.getSize() == -1) {
                     throw new IllegalStateException("File to be unzipped too big.");
@@ -85,7 +85,7 @@ public class PerformanceManagementFile2VesMapper {
                 final List<List<Event>> mappedEvents = toEvent(mappingConfiguration, hostIp, iterator);
 
                 mappedEvents.forEach(mapped -> {
-                    final CommonEventFormat302ONAP eventFormat = new CommonEventFormat302ONAP();
+                    final var eventFormat = new CommonEventFormat302ONAP();
                     eventFormat.setEventList(mapped);
                     listOfNotifications.add(eventFormat);
                 });
@@ -107,11 +107,11 @@ public class PerformanceManagementFile2VesMapper {
             final Iterator<Map<String, String>> iterator) {
         final List<List<Event>> globalList = new ArrayList<>();
         final int batchSize = mappingConfiguration.getBatchSize();
-        int sequence = 0;
+        var sequence = 0;
         List<Event> events = new ArrayList<>();
         final CsvConfiguration csv = mappingConfiguration.getCsv();
         while (iterator.hasNext()) {
-            final Event event = new Event();
+            final var event = new Event();
             final Map<String, String> recordMap = iterator.next();
             event.setCommonEventHeader(CommonEventHeaderHandler.toCommonEventHeader(mappingConfiguration, hostIp, csv,
                 recordMap,  sequence));
