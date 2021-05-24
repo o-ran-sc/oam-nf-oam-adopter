@@ -54,7 +54,7 @@ public final class AdaptersDeployer implements PerformanceManagementAdaptersDepl
         if (adapters.get(hostIpAddress) != null) {
             throw new AlreadyPresentException(hostIpAddress);
         }
-        final Adapter adapter =
+        final var adapter =
                 Adapter.builder().username(username).password(password).hostIpAddress(hostIpAddress).build();
         final PerformanceManagementRestAgent pmRestAgent =
                 pmRestAgentFactory.createPerformanceManagementRestAgent(adapter).blockingGet();

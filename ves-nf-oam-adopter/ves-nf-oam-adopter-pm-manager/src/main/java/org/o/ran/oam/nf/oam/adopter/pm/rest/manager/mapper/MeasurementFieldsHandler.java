@@ -39,7 +39,7 @@ final class MeasurementFieldsHandler {
                 .stream().filter(records::containsKey)
                 .collect(Collectors.toMap(Function.identity(), records::get)));
 
-        final NamedHashMap namedHashMap = new NamedHashMap();
+        final var namedHashMap = new NamedHashMap();
         namedHashMap.setName(csv.getAdditionalMeasurementsName());
         namedHashMap.setHashMap(csv.getAdditionalMeasurements().stream()
                 .filter(records::containsKey)
@@ -68,7 +68,7 @@ final class MeasurementFieldsHandler {
 
     static MeasurementFields toMeasurementFields(final VesMappingConfiguration config,
             final Map<String, String> records) {
-        final MeasurementFields measurementFields = new MeasurementFields();
+        final var measurementFields = new MeasurementFields();
         setMandatoryFields(measurementFields, config);
         setOptionalsFields(measurementFields, records, config);
         return measurementFields;

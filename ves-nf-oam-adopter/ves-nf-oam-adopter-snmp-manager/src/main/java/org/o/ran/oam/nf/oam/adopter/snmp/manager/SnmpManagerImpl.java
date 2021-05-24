@@ -33,8 +33,7 @@ public class SnmpManagerImpl implements AutoCloseable {
      */
     public SnmpManagerImpl(final String host, final int port, final SnmpMapper mapper,
             final VesEventNotifier vesEventNotifier, final TimeZoneOffsetService timeZoneOffsetService) {
-        final SnmpTrapListener trapListener =
-                new SnmpTrapListener(host, port, mapper, vesEventNotifier, timeZoneOffsetService);
+        final var trapListener = new SnmpTrapListener(host, port, mapper, vesEventNotifier, timeZoneOffsetService);
         this.snmpThread = new Thread(trapListener, SNMP_MANAGER_THREAD);
     }
 

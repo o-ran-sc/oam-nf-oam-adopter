@@ -8,7 +8,6 @@ import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.hc.client5.http.async.methods.SimpleHttpRequest;
 import org.apache.hc.client5.http.async.methods.SimpleHttpRequests;
 import org.apache.hc.client5.http.async.methods.SimpleHttpResponse;
 import org.apache.hc.client5.http.impl.async.CloseableHttpAsyncClient;
@@ -31,15 +30,15 @@ public final class TokenHandler {
     public static synchronized String returnToken(final CloseableHttpAsyncClient client, final String tokenEndpoint,
             final Adapter adapter) throws ExecutionException, InterruptedException {
         final String host = HTTPS + adapter.getHostIpAddress();
-        final SimpleHttpRequest request = SimpleHttpRequests.post(host + tokenEndpoint);
-        final String basicAuth = Base64.getEncoder().encodeToString(
+        final var request = SimpleHttpRequests.post(host + tokenEndpoint);
+        final var basicAuth = Base64.getEncoder().encodeToString(
                 (adapter.getUsername() + ":" + adapter.getPassword()).getBytes(StandardCharsets.UTF_8));
         request.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + basicAuth);
         request.addHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE);
         request.addHeader(HttpHeaders.ACCEPT, APPLICATION_JSON_VALUE);
 
         final SimpleHttpResponse response = client.execute(request, null).get();
-        final String statusLine = new StatusLine(response).toString();
+        final var statusLine = new StatusLine(response).toString();
         if (response.getCode() != HttpStatus.SC_OK) {
             throw new TokenGenerationException("Failed to obtain a token for host " + host + ": " + statusLine);
         }

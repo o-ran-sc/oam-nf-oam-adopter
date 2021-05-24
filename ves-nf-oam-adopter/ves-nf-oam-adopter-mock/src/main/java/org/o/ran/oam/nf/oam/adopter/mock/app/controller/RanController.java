@@ -53,14 +53,14 @@ public class RanController implements ControllerApi {
     @Override
     public ResponseEntity<Resource> getPerformanceManagementFiles() {
         LOG.info("Read pm files.");
-        final HttpHeaders headers = new HttpHeaders();
+        final var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         return new ResponseEntity<>(ZipUtil.read(), headers, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<String> getTimeZone() {
-        final ZoneId zoneId = ZoneId.systemDefault();
+        final var zoneId = ZoneId.systemDefault();
         final ZoneOffset offset = zoneId.getRules().getOffset(Instant.now());
         LOG.info("ZoneId {} / Offset {}", zoneId, offset);
         return ResponseEntity.ok(GSON.toJson(new TimeZoneOffsetResponse(OFFSET_FORMATTER.format(offset))));

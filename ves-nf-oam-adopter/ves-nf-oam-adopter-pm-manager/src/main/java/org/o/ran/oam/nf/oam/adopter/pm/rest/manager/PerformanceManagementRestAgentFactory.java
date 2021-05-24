@@ -58,8 +58,8 @@ public class PerformanceManagementRestAgentFactory {
      */
     public final Single<PerformanceManagementRestAgent> createPerformanceManagementRestAgent(final Adapter adapter) {
         return httpRestClient.getTimeZone(adapter).map(timeZone -> {
-            final PerformanceManagementAgentRunnable pmAgentRunnable =
-                    new PerformanceManagementAgentRunnable(httpRestClient, eventListener, pmFileMapper, adapter);
+            final var pmAgentRunnable = new PerformanceManagementAgentRunnable(httpRestClient, eventListener,
+                pmFileMapper, adapter);
             return new PerformanceManagementRestAgent(pmAgentRunnable, properties.getSynchronizationTimeStart(),
                     properties.getSynchronizationTimeFrequency(), timeZone);
         });

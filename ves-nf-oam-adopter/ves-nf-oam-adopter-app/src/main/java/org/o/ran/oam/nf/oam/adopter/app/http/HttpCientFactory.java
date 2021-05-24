@@ -53,7 +53,7 @@ public final class HttpCientFactory {
             final String trustStorePassword, final Long conectionTimeout, final Long responseTimeout)
             throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException, IOException,
             CertificateException {
-        final SSLContext sslContext = getSslContext(new File(trustStore), trustStorePassword);
+        final var sslContext = getSslContext(new File(trustStore), trustStorePassword);
         return trustTrustStore(sslContext, conectionTimeout, responseTimeout);
     }
 

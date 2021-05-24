@@ -76,7 +76,7 @@ public class SnmpNotifier {
 
     private static void sendTrap(final CommunityTarget<UdpAddress> target, final HashMap<String, String> trap,
             final String trapType) throws IOException {
-        final PDU pdu = new PDU();
+        final var pdu = new PDU();
         pdu.setType(PDU.TRAP);
         trap.forEach((key, value) -> {
             try {
@@ -86,7 +86,7 @@ public class SnmpNotifier {
             }
         });
 
-        try (final Snmp snmp = new Snmp(new DefaultUdpTransportMapping())) {
+        try (final var snmp = new Snmp(new DefaultUdpTransportMapping())) {
             snmp.send(pdu, target, null, null);
             LOG.info("Trap {} sent successfully.", trapType);
         }

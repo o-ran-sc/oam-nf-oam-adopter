@@ -53,8 +53,8 @@ public final class DownloadPerformanceManagementFilesHandler {
     }
 
     private static Single<SimpleBody> validateGetZipFile(final Adapter adapter, final SimpleHttpResponse response) {
-        final String statusLine = new StatusLine(response).toString();
-        final ContentType contentType = response.getContentType();
+        final var statusLine = new StatusLine(response).toString();
+        final var contentType = response.getContentType();
         final SimpleBody entity = response.getBody();
         if (response.getCode() == HttpStatus.SC_OK && entity != null && ContentType.APPLICATION_OCTET_STREAM
             .getMimeType().equals(contentType.getMimeType())) {

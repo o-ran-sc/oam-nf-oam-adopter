@@ -23,7 +23,6 @@ import com.google.gson.Gson;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Optional;
 import org.o.ran.oam.nf.oam.adopter.api.VesEventNotifier;
 import org.o.ran.oam.nf.oam.adopter.snmp.manager.api.TimeZoneOffsetService;
@@ -34,7 +33,6 @@ import org.snmp4j.CommandResponder;
 import org.snmp4j.CommandResponderEvent;
 import org.snmp4j.MessageDispatcher;
 import org.snmp4j.MessageDispatcherImpl;
-import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
 import org.snmp4j.mp.MPv2c;
 import org.snmp4j.smi.UdpAddress;
@@ -63,11 +61,10 @@ final class SnmpTrapListener implements CommandResponder, Runnable {
 
     @Override
     public synchronized void run() {
-        try (final DefaultUdpTransportMapping snmpTarget = new DefaultUdpTransportMapping(
+        try (final var snmpTarget = new DefaultUdpTransportMapping(
                 new UdpAddress(hostPortAddress))) {
-            final ThreadPool threadPool = ThreadPool.create("SNMP_V2_Listener", THREADS_SIZE);
-            final MessageDispatcher dispatcher =
-                    new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
+            final var threadPool = ThreadPool.create("SNMP_V2_Listener", THREADS_SIZE);
+            final var dispatcher = new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
             dispatcher.addMessageProcessingModel(new MPv2c());
             listenSnmp(dispatcher, snmpTarget);
         } catch (final IOException e) {
@@ -78,7 +75,7 @@ final class SnmpTrapListener implements CommandResponder, Runnable {
     @SuppressFBWarnings("WA_NOT_IN_LOOP")
     private synchronized void listenSnmp(final MessageDispatcher dispatcher,
             final DefaultUdpTransportMapping snmpTarget) {
-        try (final Snmp snmp = new Snmp(dispatcher, snmpTarget)) {
+        try (final var snmp = new Snmp(dispatcher, snmpTarget)) {
             snmp.addCommandResponder(this);
             snmpTarget.listen();
             LOG.debug("Listening on {}", snmpTarget);
@@ -95,14 +92,14 @@ final class SnmpTrapListener implements CommandResponder, Runnable {
     @Override
     public synchronized void processPdu(final CommandResponderEvent cmdRespEvent) {
         LOG.info("Received PDU");
-        final PDU pdu = cmdRespEvent.getPDU();
+        final var pdu = cmdRespEvent.getPDU();
         if (pdu == null) {
             LOG.warn("Ignoring PDU.");
             return;
         }
 
         final UdpAddress address = (UdpAddress) cmdRespEvent.getPeerAddress();
-        final ZoneId optZoneId = timeZoneOffsetService.getTimeZone(address.getInetAddress().getHostAddress());
+        final var optZoneId = timeZoneOffsetService.getTimeZone(address.getInetAddress().getHostAddress());
         final String timeZone = Optional.ofNullable(optZoneId)
             .map(zoneId -> "UTC" + LocalDateTime.now().atZone(zoneId).getOffset().toString()).orElse(null);
 

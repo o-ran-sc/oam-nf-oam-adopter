@@ -56,7 +56,7 @@ public final class PerformanceManagementRestAgent implements AutoCloseable {
     }
 
     private long initialDelay() {
-        final ZonedDateTime now = ZonedDateTime.now(zoneId);
+        final var now = ZonedDateTime.now(zoneId);
 
         ZonedDateTime nextRun = now
                 .withHour(synchronizationTimeStart.getHour())
@@ -65,8 +65,7 @@ public final class PerformanceManagementRestAgent implements AutoCloseable {
         if (now.compareTo(nextRun) > 0) {
             nextRun = nextRun.plusSeconds(synchronizationTimeFrequency);
         }
-        final Duration duration = Duration.between(now, nextRun);
-        return duration.getSeconds();
+        return Duration.between(now, nextRun).getSeconds();
     }
 
     public ZoneId getTimeZone() {

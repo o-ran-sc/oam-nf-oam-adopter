@@ -187,7 +187,6 @@ Rest Adapter configuration
 
 Configuration file **application.yml** contains global definitions required to be consumed by PM REST adapters services.
 
-- **token-api-username** Defines the username to be used for login
 - **synchronization-time-start** Defines the time for execution of pull of PM files and forwarding as VES Message
 - **synchronization-time-frequency** Defines the time for execution of pull of PM files and forwarding as VES Message
 - **mapping-config-path** Defines the path where mapping configuration file is located
