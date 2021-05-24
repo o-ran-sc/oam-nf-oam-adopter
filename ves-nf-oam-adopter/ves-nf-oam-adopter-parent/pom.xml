@@ -36,7 +36,7 @@
 
     <properties>
         <!-- Code coverate & Sonar -->
-        <minimum.coverage>0.9</minimum.coverage>
+        <minimum.coverage>0.85</minimum.coverage>
         <jacoco.reportDirectory.aggregate>
             ${project.reporting.outputDirectory}/jacoco-aggregate
         </jacoco.reportDirectory.aggregate>
