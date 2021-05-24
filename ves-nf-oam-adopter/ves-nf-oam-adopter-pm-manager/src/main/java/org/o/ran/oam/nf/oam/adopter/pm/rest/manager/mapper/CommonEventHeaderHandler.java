@@ -37,7 +37,7 @@ final class CommonEventHeaderHandler {
 
     static CommonEventHeader toCommonEventHeader(final VesMappingConfiguration config, final String hostIp,
             final CsvConfiguration csv, final Map<String, String> recordMap, final int sequence) {
-        final CommonEventHeader header = new CommonEventHeader();
+        final var header = new CommonEventHeader();
         setMandatoryFields(config, hostIp, csv, header, recordMap, sequence);
         setOptionalFields(config, header);
         return header;
