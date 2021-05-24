@@ -1,0 +1,8 @@
+Code-Review-1: ORAN Jobbuilder <releng+oran-jobbuilder@linuxfoundation.org>
+Code-Review+2: Claudio David Gasparini <claudio.gasparini@intl.att.com>
+Verified+1: Claudio David Gasparini <claudio.gasparini@intl.att.com>
+Submitted-by: Claudio David Gasparini <claudio.gasparini@intl.att.com>
+Submitted-at: Mon, 24 May 2021 10:27:14 +0000
+Reviewed-on: https://gerrit.o-ran-sc.org/r/c/oam/nf-oam-adopter/+/6122
+Project: oam/nf-oam-adopter
+Branch: refs/heads/master
