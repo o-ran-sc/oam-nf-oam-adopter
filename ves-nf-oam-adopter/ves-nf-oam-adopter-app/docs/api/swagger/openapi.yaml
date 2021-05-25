@@ -47,8 +47,9 @@ paths:
                 items:
                   type: string
         '400':
-          $ref: '#/components/responses/400Error'
-
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
   /adapter/{host}:
     delete:
@@ -65,13 +66,13 @@ paths:
 
       responses:
         '200':
-          description: Successfully deleted an adapter
+          $ref: '#/components/responses/Success'
         '400':
-          description: Invalid request
+          $ref: '#/components/responses/BadRequest'
         '401':
-          description: Unauthorized
+          $ref: '#/components/responses/Unauthorized'
         '404':
-          description: adapter not found
+          $ref: '#/components/responses/NotFound'
 
   /adapter:
     post:
@@ -87,12 +88,23 @@ paths:
               $ref: '#/components/schemas/Adapter'
       responses:
         '200':
-          description: Successfully returned a list of adapters
+          $ref: '#/components/responses/Success'
         '400':
-          $ref: '#/components/responses/400Error'
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
 
 components:
   schemas:
+    ErrorMessage:
+      type: object
+      title: Error
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+
     Adapter:
       type: object
       properties:
@@ -113,12 +125,24 @@ components:
         - mechId
 
   responses:
-    400Error:
+    Success:
+      description: Succesfully excecuted
+    BadRequest:
       description: Invalid request
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              message:
-                type: string
+            $ref: '#/components/schemas/ErrorMessage'
+    Unauthorized:
+      description: Unhautorized request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+

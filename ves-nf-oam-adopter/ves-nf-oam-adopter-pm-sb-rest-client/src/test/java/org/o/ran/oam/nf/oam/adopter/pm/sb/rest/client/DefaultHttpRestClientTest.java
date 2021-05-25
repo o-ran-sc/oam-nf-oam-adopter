@@ -177,4 +177,10 @@ class DefaultHttpRestClientTest {
         observer.assertError(throwable -> throwable.getMessage()
             .equals("Get Zone offset failed for 150.62.25.26 . Empty output received"));
     }
+
+    @Test
+    void testGetTimeOffsetFailExecutionException() {
+        final TestObserver<ZoneId> observer = restClient.getTimeZone(ADAPTER).test();
+        observer.assertError(throwable -> throwable.getMessage().equals("Failed to get Zone ID for 150.62.25.26"));
+    }
 }

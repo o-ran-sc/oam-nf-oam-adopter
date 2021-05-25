@@ -48,7 +48,7 @@ public class PerformanceManagementFile2VesMapper {
     private static final String CSV_EXTENSION = ".csv";
     private final PerformanceManagementMapperConfigProvider pmConfigProvider;
     private static final int THRESHOLD_SIZE  = 1000000000; // 1 GB
-    private static final int THRESHOLD_RATIO = 10;
+    private static final double THRESHOLD_RATIO = 40;
     private static final int THRESHOLD_ENTRIES = 10000;
 
     @Autowired
@@ -83,9 +83,9 @@ public class PerformanceManagementFile2VesMapper {
                     throw new IllegalStateException("File to be unzipped too big.");
                 }
 
-                final long compressionRatio = totalSizeEntry / entry.getCompressedSize();
+                final double compressionRatio = (double) totalSizeEntry / entry.getCompressedSize();
                 if (compressionRatio > THRESHOLD_RATIO) {
-                    return Single.error(new Exception("Wrong file type, threshold to high."));
+                    return Single.error(new Exception("Wrong file type, threshold to high " + compressionRatio));
                 }
 
                 if (totalEntryArchive > THRESHOLD_ENTRIES) {

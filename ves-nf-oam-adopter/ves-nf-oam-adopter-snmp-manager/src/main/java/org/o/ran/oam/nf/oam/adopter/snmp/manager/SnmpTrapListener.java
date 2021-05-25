@@ -50,8 +50,7 @@ final class SnmpTrapListener implements Runnable {
 
     @Override
     public synchronized void run() {
-        try (final var snmpTarget = new DefaultUdpTransportMapping(
-                new UdpAddress(hostPortAddress))) {
+        try (final var snmpTarget = new DefaultUdpTransportMapping(new UdpAddress(hostPortAddress))) {
             final var threadPool = ThreadPool.create("SNMP_V2_Listener", THREADS_SIZE);
             final var dispatcher = new MultiThreadedMessageDispatcher(threadPool, new MessageDispatcherImpl());
             dispatcher.addMessageProcessingModel(new MPv2c());

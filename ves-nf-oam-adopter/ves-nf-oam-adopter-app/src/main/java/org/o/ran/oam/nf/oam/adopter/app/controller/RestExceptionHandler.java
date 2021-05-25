@@ -51,10 +51,11 @@ public class RestExceptionHandler {
     /**
      * Handle Not Found Exceptions.
      */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({NotFoundException.class})
-    public static ResponseEntity<Object> handleNotFoundExceptions(final NotFoundException exception) {
+    public static String handleNotFoundExceptions(final NotFoundException exception) {
         LOG.error("Request failed", exception);
-        return ResponseEntity.notFound().build();
+        return exception.getMessage();
     }
 
     /**

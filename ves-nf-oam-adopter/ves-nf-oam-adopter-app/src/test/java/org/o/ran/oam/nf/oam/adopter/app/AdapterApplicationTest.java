@@ -85,24 +85,32 @@ class AdapterApplicationTest {
     void testGetAllAdapters() throws Exception {
         when(deployer.getAll()).thenReturn(Collections.singletonList("mockResult"));
 
-        mockMvc.perform(get("/adapters/").secure(true).contentType(MediaType.APPLICATION_JSON)).andDo(print())
+        mockMvc.perform(get("/adapters/").secure(true)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk()).andExpect(content().string(containsString("mockResult")));
     }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     void testDeleteAdapter() throws Exception {
-        mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true)
+                                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     void testNotFound() throws Exception {
-        doThrow(NotFoundException.class).when(deployer).delete(anyString());
+        doThrow(new NotFoundException("172.10.55.3"))
+                .when(deployer)
+                .delete(anyString());
 
-        mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true).contentType(MediaType.APPLICATION_JSON))
-                .andDo(print()).andExpect(status().isNotFound());
+        mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound())
+                .andExpect(content().string(containsString("Adapter 172.10.55.3 is not present.")));
     }
 
     @Test
@@ -117,14 +125,16 @@ class AdapterApplicationTest {
         mechId.password("somePass");
         adapter.setMechId(mechId);
 
-        mockMvc.perform(post("/adapters/adapter").secure(true).contentType(MediaType.APPLICATION_JSON)
-                                .content(GSON.toJson(adapter))).andDo(print()).andExpect(status().isOk());
+        mockMvc.perform(post("/adapters/adapter").secure(true)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(GSON.toJson(adapter)))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     void testAlreadyExist() throws Exception {
-
         final Adapter adapter = new Adapter();
         adapter.setHost("172.10.55.3");
 
@@ -133,16 +143,20 @@ class AdapterApplicationTest {
         mechId.password("somePass");
         adapter.setMechId(mechId);
 
-        doThrow(AlreadyPresentException.class).when(deployer).create(anyString(), anyString(), anyString());
+        doThrow(new AlreadyPresentException("172.10.55.3"))
+                .when(deployer).create(anyString(), anyString(), anyString());
 
-        mockMvc.perform(post("/adapters/adapter").secure(true).contentType(MediaType.APPLICATION_JSON)
-                                .content(GSON.toJson(adapter))).andDo(print()).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/adapters/adapter")
+                                .secure(true).contentType(MediaType.APPLICATION_JSON)
+                                .content(GSON.toJson(adapter)))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string(containsString("Adapter 172.10.55.3 already present.")));
     }
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     void testMissingArguments() throws Exception {
-
         final Adapter adapter = new Adapter();
         adapter.setHost("172.10.55.3");
 
@@ -150,9 +164,27 @@ class AdapterApplicationTest {
         mechId.username("admin");
         adapter.setMechId(mechId);
 
+        mockMvc.perform(post("/adapters/adapter").secure(true)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(GSON.toJson(adapter)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 
-        mockMvc.perform(post("/adapters/adapter").secure(true).contentType(MediaType.APPLICATION_JSON)
-                                .content(GSON.toJson(adapter))).andDo(print()).andExpect(status().isBadRequest());
+    @Test
+    void testUnauthorized() throws Exception {
+        mockMvc.perform(post("/adapters/adapter").secure(true))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(post("/adapters/adapter").secure(true))
+            .andDo(print())
+            .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(delete("/adapters/adapter/172.10.55.3").secure(true))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
     }
 
     @Test
