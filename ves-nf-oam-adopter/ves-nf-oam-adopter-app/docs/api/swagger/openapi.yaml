@@ -48,7 +48,8 @@ paths:
                   type: string
         '400':
           $ref: '#/components/responses/400Error'
-
+        '401':
+          $ref: '#/components/responses/401Error'
 
   /adapter/{host}:
     delete:
@@ -67,11 +68,11 @@ paths:
         '200':
           description: Successfully deleted an adapter
         '400':
-          description: Invalid request
+          $ref: '#/components/responses/400Error'
         '401':
-          description: Unauthorized
+          $ref: '#/components/responses/401Error'
         '404':
-          description: adapter not found
+          $ref: '#/components/responses/404Error'
 
   /adapter:
     post:
@@ -87,9 +88,11 @@ paths:
               $ref: '#/components/schemas/Adapter'
       responses:
         '200':
-          description: Successfully returned a list of adapters
+          $ref: '#/components/responses/200Success'
         '400':
           $ref: '#/components/responses/400Error'
+        '401':
+          $ref: '#/components/responses/401Error'
 
 components:
   schemas:
@@ -113,8 +116,35 @@ components:
         - mechId
 
   responses:
+    200Success:
+      description: Succesfully excecuted
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
     400Error:
       description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    401Error:
+      description: Unhautorized request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+    404Error:
+      description: Not Found
       content:
         application/json:
           schema:
