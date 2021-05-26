@@ -8,7 +8,7 @@ SNMP2VES Manager
 SNMP Manager library follows `VES Event Listener 7.1 <https://docs.onap.org/projects/onap-vnfrqts-requirements/en/latest/Chapter8/ves7_1spec.html#>`_
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 1
    :caption: Contents:
 
 FM VES Message

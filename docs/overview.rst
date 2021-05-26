@@ -2,8 +2,8 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 .. Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
 
-NF OAM Adopter Overview
-=======================
+Overview
+========
 
 NF OAM Adopter provides FM and PM VES event notification capabilities.
 

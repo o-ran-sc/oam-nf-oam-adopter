@@ -76,6 +76,11 @@
                 <artifactId>ves-nf-oam-adopter-pm-sb-rest-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ves-nf-oam-adopter-app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
