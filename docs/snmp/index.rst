@@ -2,20 +2,16 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 .. Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
 
+================
 SNMP2VES Manager
-################
+================
 
 SNMP Manager library follows `VES Event Listener 7.1 <https://docs.onap.org/projects/onap-vnfrqts-requirements/en/latest/Chapter8/ves7_1spec.html#>`_
-
-.. toctree::
-   :maxdepth: 3
-   :caption: Contents:
 
 FM VES Message
 --------------
 
-Datatype: commonEventHeader
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Datatype: commonEventHeader**
 
 .. list-table::
    :header-rows: 1
@@ -141,8 +137,7 @@ Datatype: commonEventHeader
      - no
      - none
 
-Datatype: faultFields
-~~~~~~~~~~~~~~~~~~~~~
+**Datatype: faultFields**
 
 .. list-table::
    :header-rows: 1

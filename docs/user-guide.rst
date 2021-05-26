@@ -2,11 +2,11 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 .. Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
 
-NF OAM Adopter User Guide
-=========================
+User Guide
+==========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    ./snmp/index.rst
