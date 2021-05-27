@@ -2,20 +2,16 @@
 .. SPDX-License-Identifier: CC-BY-4.0
 .. Copyright (C) 2021 AT&T Intellectual Property. All rights reserved.
 
+===============
 PM REST Manager
-###############
+===============
 
 PM REST Manager library follows `VES Event Listener 7.1 <https://docs.onap.org/projects/onap-vnfrqts-requirements/en/latest/Chapter8/ves7_1spec.html#>`_
 
-.. toctree::
-   :maxdepth: 3
-   :caption: Contents:
-
 PM VES Message
-==============
+--------------
 
-Datatype: commonEventHeader
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Datatype: commonEventHeader**
 
 .. list-table::
    :header-rows: 1
@@ -142,8 +138,7 @@ Datatype: commonEventHeader
      - none
 
 
-Datatype: measurementFields
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Datatype: measurementFields**
 
 .. list-table::
    :header-rows: 1
@@ -180,10 +175,9 @@ Datatype: measurementFields
      - none
 
 REST PM Configuration
-=====================
+---------------------
 
-Rest Adapter configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Rest Adapter configuration**
 
 Configuration file **application.yml** contains global definitions required to be consumed by PM REST adapters services.
 
@@ -191,8 +185,7 @@ Configuration file **application.yml** contains global definitions required to b
 - **synchronization-time-frequency** Defines the time for execution of pull of PM files and forwarding as VES Message
 - **mapping-config-path** Defines the path where mapping configuration file is located
 
-Rest SB Client Adapter configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Rest SB Client Adapter configuration**
 
 - **ran-token-endpoint** Defines rand endpoint from where token will be obtained
 - **ran-pm-endpoint:** Defines rand endpoint from where ZIP with PM files will be GET.
@@ -202,7 +195,7 @@ Rest SB Client Adapter configuration
   :language: YAML
 
 Mapping Configuration
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 Configuration file **pm-ves-message-mapping.yaml** contains all definitions required to define the mapping
 from ZIP file with collection of csv files information to VES Message format
@@ -231,20 +224,18 @@ from ZIP file with collection of csv files information to VES Message format
   :language: YAML
 
 PM Adapter Configuration
-========================
+------------------------
 
 PM Adapters can be instantiated at runtime
 
-Create a PM Adapter
-~~~~~~~~~~~~~~~~~~~
+**Create a PM Adapter**
 
 **POST** ``https://<SERVICE_IP>:<SERVICE_PORT>/adapters/adapter``
 
 .. literalinclude:: create-adapter.json
   :language: JSON
 
-Get PM Adapters
-~~~~~~~~~~~~~~~
+**Get PM Adapters**
 
 **GET** ``https://<SERVICE_IP>:<SERVICE_PORT>/adapters/``
 
@@ -252,7 +243,6 @@ Get PM Adapters
   :language: JSON
 
 
-Delete PM Adapter
-~~~~~~~~~~~~~~~~~
+**Delete PM Adapter**
 
 **DELETE** ``https://<SERVICE_IP>:<SERVICE_PORT>/adapters/adapter/10.53.40.50``
