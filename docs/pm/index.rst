@@ -182,7 +182,7 @@ REST PM Configuration
 Configuration file **application.yml** contains global definitions required to be consumed by PM REST adapters services.
 
 - **synchronization-time-start** Defines the time for execution of pull of PM files and forwarding as VES Message
-- **synchronization-time-frequency** Defines the time for execution of pull of PM files and forwarding as VES Message
+- **synchronization-time-frequency** Define the frequency to trigger the pull and forward of PM data after first execution.
 - **mapping-config-path** Defines the path where mapping configuration file is located
 
 **Rest SB Client Adapter configuration**
