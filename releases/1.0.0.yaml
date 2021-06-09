@@ -1,0 +1,5 @@
+---
+distribution_type: maven
+log_dir: oam-nf-oam-adopter-maven-docker-stage-master/45
+version: 1.0.0
+project: oam-nf-oam-adopter
