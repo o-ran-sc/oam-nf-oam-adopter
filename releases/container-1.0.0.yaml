@@ -1,0 +1,12 @@
+---
+distribution_type: container
+container_release_tag: 1.0.0
+container_pull_registry: nexus.o-ran-sc.org:10003
+container_push_registry: nexus.o-ran-sc.org:10002
+project: nf-oam-adopter
+ref: e35b9cc1a22a0a940a51952d30dda12e8c8d0107
+containers:
+  - name: ves-nf-oam-adopter
+    version: 1.0.0
+  - name: ves-nf-oam-adopter-ran-mock
+    version: 1.0.0
