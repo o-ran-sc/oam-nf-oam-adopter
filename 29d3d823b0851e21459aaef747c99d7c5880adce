@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b06c6c25_24c18ed8",
+        "filename": "releases/container-1.0.0.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000059
+      },
+      "writtenOn": "2021-06-15T19:58:04Z",
+      "side": 1,
+      "message": "nexus3",
+      "range": {
+        "startLine": 4,
+        "startChar": 25,
+        "endLine": 4,
+        "endChar": 30
+      },
+      "revId": "29d3d823b0851e21459aaef747c99d7c5880adce",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3ec2bd4_2586f0b5",
+        "filename": "releases/container-1.0.0.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000059
+      },
+      "writtenOn": "2021-06-15T19:58:04Z",
+      "side": 1,
+      "message": "nexus3",
+      "range": {
+        "startLine": 5,
+        "startChar": 25,
+        "endLine": 5,
+        "endChar": 30
+      },
+      "revId": "29d3d823b0851e21459aaef747c99d7c5880adce",
+      "serverId": "84e4e190-e623-4c37-9eda-58b1937c1b53"
+    }
+  ]
+}
