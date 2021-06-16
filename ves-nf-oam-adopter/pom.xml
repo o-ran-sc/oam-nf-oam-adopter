@@ -26,7 +26,7 @@
     <groupId>org.o-ran-sc.oam</groupId>
     <artifactId>ves-nf-oam-adopter</artifactId>
     <name>ves-nf-oam-adopter</name>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <properties>

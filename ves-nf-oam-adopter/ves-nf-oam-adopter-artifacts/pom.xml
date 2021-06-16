@@ -27,7 +27,7 @@
     <parent>
         <groupId>org.o-ran-sc.oam</groupId>
         <artifactId>ves-nf-oam-adopter-parent-lite</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath>../ves-nf-oam-adopter-parent-lite/pom.xml</relativePath>
     </parent>
 
